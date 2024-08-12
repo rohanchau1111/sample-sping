@@ -10,8 +10,12 @@ version = '0.1.1-SNAPSHOT'
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
+
 repositories {
   mavenCentral()
+}
+bootJar {
+	archiveBaseName = 'mytestingjar'
 }
 publishing{
 publications{
@@ -31,9 +35,7 @@ repositories{
   }
 }
 }
-bootJar {
-	archiveBaseName = 'mytestingjar'
-}
+
 
 dependencies {
 	compileOnly('org.springframework.boot:spring-boot-starter-validation')
