@@ -14,7 +14,7 @@ repositories {
 }
 
 bootJar {
-	archiveBaseName = 'springboots2idemo'
+	archiveBaseName = 'mytestingjar'
 }
 
 dependencies {
