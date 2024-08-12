@@ -1,6 +1,5 @@
 plugins {
   id 'java'
-id 'maven-publish'
   id 'org.springframework.boot' version '3.3.2'
   id 'io.spring.dependency-management' version '1.1.6'
 }
@@ -10,36 +9,13 @@ version = '0.1.1-SNAPSHOT'
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-
 repositories {
   mavenCentral()
 }
+
 bootJar {
-	archiveBaseName = 'mytestingjar'
-	
+	archiveBaseName = 'springboots2idemo'
 }
-
-
-publishing{
-publications{
-   mavenJava(MavenPublication)
-	{
-           from components.java
-		artifact(tasks.bootJar)
-	}
-}
-repositories{
-  maven{
-   url= uri('http://172.27.225.231:8082/artifactory/gradle-dev-local')
-	    allowInsecureProtocol = true
-	credentials{
-           username='admin'
-		password='DevOps9@'
-	}
-  }
-}
-}
-
 
 dependencies {
 	compileOnly('org.springframework.boot:spring-boot-starter-validation')
@@ -58,4 +34,22 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation('junit:junit:4.13.2')
+}
+
+publishing{
+  publications{
+   mavenJava(MavenPublication){
+	  from components.java   
+   }
+  }
+repositories{
+   maven{
+      url=url('http://172.27.225.231:8082/artifactory/gradle-dev-local')
+	    allowInsecureProtocol = true
+	   credentials{
+           username ='admin'
+		   password='DevOps9@'
+	   }
+   }
+}
 }
