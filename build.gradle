@@ -48,7 +48,7 @@ publishing{
   }
 repositories{
    maven{
-      url=uri('http://172.27.225.231:8082/artifactory/gradle-dev-local')
+      url=uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
 	    allowInsecureProtocol = true
 	   credentials{
            username ='admin'
