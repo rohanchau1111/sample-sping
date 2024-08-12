@@ -14,8 +14,12 @@ targetCompatibility = JavaVersion.VERSION_17
 repositories {
   mavenCentral()
 }
-bootJar {
-	archiveBaseName = 'mytestingjar'
+//bootJar {
+//	archiveBaseName = 'mytestingjar'
+//}
+jar{
+	baseName='mytestingjar'
+	archieveVersion.set(version)
 }
 publishing{
 publications{
