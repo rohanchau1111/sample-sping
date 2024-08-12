@@ -15,7 +15,8 @@ repositories {
 }
 
 bootJar {
-	archiveBaseName = 'springboots2idemo'
+	archiveBaseName.set('springboots2idemo')
+	
 }
 
 dependencies {
@@ -40,7 +41,8 @@ dependencies {
 publishing{
   publications{
    mavenJava(MavenPublication){
-	  from components.java   
+	  from components.java 
+	   artifact tasks.bootJar
    }
   }
 repositories{
