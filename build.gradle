@@ -79,9 +79,7 @@ artifactory {
             publications('mavenJava') // Must match the publication name in the publishing block
             publishArtifacts = true
         }
-       publishArtifacts {
-            artifact file('build/libs/artifactorytest-0.1.1-SNAPSHOT.jar')
-        }
+       
     }
     
 }
