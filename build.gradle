@@ -50,7 +50,8 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
        //     artifact tasks.jar // Specifies that we are publishing a JAR file
-		   artifact file('build/libs/*.jar') 
+		//   artifact file('build/libs/*.jar') 
+		  artifact tasks.jar 
         }
     }
     repositories {
