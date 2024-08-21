@@ -41,7 +41,7 @@ dependencies {
 }
 
 jar {
-    archiveBaseName.set('springboots2idemo')
+    archiveBaseName.set('springboots2idemo.jar')
     archiveVersion.set(version)
 }
 
@@ -49,7 +49,8 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact tasks.jar // Specifies that we are publishing a JAR file
+       //     artifact tasks.jar // Specifies that we are publishing a JAR file
+		   artifact file('build/libs/*.jar') 
         }
     }
     repositories {
