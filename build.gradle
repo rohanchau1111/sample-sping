@@ -40,10 +40,10 @@ dependencies {
 	testImplementation('junit:junit:4.13.2')
 }
 
-jar {
-    archiveBaseName.set('spring-test')
-    archiveVersion.set(version)
-}
+// jar {
+//     archiveBaseName.set('spring-test')
+//     archiveVersion.set(version)
+// }
 
 publishing {
     publications {
