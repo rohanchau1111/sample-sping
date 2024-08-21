@@ -41,7 +41,7 @@ dependencies {
 }
 
 jar {
-    archiveBaseName.set('springboots2idemo.jar')
+    archiveBaseName.set('spring-test')
     archiveVersion.set(version)
 }
 
