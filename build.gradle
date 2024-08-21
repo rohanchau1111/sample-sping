@@ -1,11 +1,9 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'org.springframework.boot' version '3.3.2'
-    id 'io.spring.dependency-management' version '1.1.6'
-   // id 'com.jfrog.artifactory' version '5.3.0' // Artifactory plugin for Gradle
-  //  id 'com.jfrog.artifactory' version '4.18.3'
-      id 'com.jfrog.artifactory' version '5.1.12'
+    id 'com.jfrog.artifactory' version '5.1.12' // Artifactory plugin for Gradle
+    id 'org.springframework.boot' version '3.3.2' // Optional, if using Spring Boot
+    id 'io.spring.dependency-management' version '1.1.6' // Optional, if using Spring Boot
 }
 
 group = 'ch.appuio.techlab'
@@ -14,32 +12,17 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
-    google()
-    jcenter()
     mavenCentral()
+    // Add other repositories if needed
 }
 
 dependencies {
-     classpath "org.jfrog.buildinfo:build-info-extractor-gradle:5.1.12" 
-    compileOnly 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.liquibase:liquibase-core'
-    implementation 'io.micrometer:micrometer-registry-prometheus'
-    implementation 'com.h2database:h2'
-    implementation 'mysql:mysql-connector-java:8.0.33'
-    implementation 'org.postgresql:postgresql'
-    
-    testImplementation 'org.springframework.boot:spring-boot-starter-test' {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
-    testImplementation 'junit:junit:4.13.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-// Configure JAR task
 jar {
     archiveBaseName.set('springboots2idemo')
     archiveVersion.set(version)
@@ -56,8 +39,8 @@ publishing {
         maven {
             url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
             credentials {
-                   username = 'admin'
-            password = 'DevOps9@'
+               username = 'admin'
+            password = 'password'
             }
         }
     }
@@ -69,7 +52,7 @@ artifactory {
         repository {
             repoKey = 'gradle-dev-local' // Ensure this matches your Artifactory repository key
             username = 'admin'
-            password = 'DevOps9@'
+            password = 'password'
         }
         defaults {
             publications('mavenJava') // Must match the publication name in the publishing block
@@ -79,8 +62,8 @@ artifactory {
     resolve {
         repository {
             repoKey = 'libs-release' // Adjust if you need to resolve dependencies from Artifactory
-            username = project.findProperty('artifactory_user') ?: 'default_user'
-            password = project.findProperty('artifactory_password') ?: 'default_password'
+           username = 'admin'
+            password = 'password'
         }
     }
 }
