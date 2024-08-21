@@ -51,7 +51,9 @@ publishing {
             from components.java
        //     artifact tasks.jar // Specifies that we are publishing a JAR file
 		//   artifact file('build/libs/*.jar') 
-		  artifact tasks.jar 
+		artifact file('build/libs/artifactorytest-0.1.1-SNAPSHOT.jar')
+
+		//  artifact tasks.jar 
         }
     }
     repositories {
