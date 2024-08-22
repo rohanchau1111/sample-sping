@@ -51,7 +51,7 @@ publishing {
             from components.java
          //   def warFile = fileTree(dir:"$buildDir/libs", include:'artifactorytest-0.1.1-SNAPSHOT.jar').singleFile
 	//artifact warFile
-	fileTree(dir:"$buildDir/libs",include:'**/*.war',exclude:'**/*-plain.jar').each{file ->
+	fileTree(dir:"$buildDir/libs",include:'**/*.jar',exclude:'**/**-plain.jar').each{file ->
 	 artifact file
 	}	
 	//artifact file("build/libs/${archiveBaseName.get()}-${archiveVersion.get()}.jar") // Specify the path to the JAR file
