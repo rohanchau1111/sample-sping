@@ -42,10 +42,11 @@ publishing {
             artifactId = 'artifactorytest'
             version = "0.1.1-SNAPSHOT"
             
-          // Specify the JAR file to publish
- //          artifact file("build/libs/${project.name}-${project.version}.jar"){
- // exclude '**/*-plain.jar'
- //          }
+         bootJava(MavenPublication) {
+            version = "${version}-${branchId}-SNAPSHOT"
+            
+            from components.web
+            artifact tasks.named("bootWar")
   
          
             
@@ -73,8 +74,9 @@ artifactory {
             password = 'DevOps9@'
         }
         defaults {
-            publications('mavenJava') // Must match the publication name in the publishing block
-            publishArtifacts = true
+         //   publications('mavenJava') // Must match the publication name in the publishing block
+          publications('bootJava')
+         publishArtifacts = true
         }
     }
 }
