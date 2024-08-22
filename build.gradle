@@ -49,7 +49,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-       
+         artifact file("build/libs/${jar.archiveBaseName.get()}-${jar.archiveVersion.get()}.jar") // Specify the path to the JAR file
 	}
 	  
     }
