@@ -22,63 +22,17 @@ dependencies {
     implementation 'com.example:my-jar-artifact:1.0.0' // Coordinates of the JAR file
 }
 
-task copyDependencies(type: Copy) {
-    from configurations.implementation
-    into "$buildDir/libs"
-}
-
-build {
-    dependsOn copyDependencies
-}
----------------
-
-plugins {
-    id 'java'
-}
-
-repositories {
-    maven {
-        url "http://172.27.225.231:8082/artifactory/libs-release-local" // Replace with your Artifactory repository URL
-        credentials {
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-        }
-    }
-}
-
-dependencies {
-    implementation 'com.example:my-jar-artifact:1.0.0' // Coordinates of the JAR file
-}
-
-task copyDependencies(type: Copy) {
-    // Use a lazy task action to ensure dependencies are resolved during execution
+// Task to ensure dependencies are resolved
+task ensureDependenciesResolved {
     doLast {
-        configurations.implementation.each { file ->
-            if (file.name.endsWith('.jar')) {
-                copy {
-                    from zipTree(file)
-                    into "$buildDir/libs"
-                }
-            }
-        }
+        configurations.implementation.resolve()
     }
 }
 
-tasks.build {
-    dependsOn copyDependencies
-}
-
-
-
-
-
-
-
-
-------
+// Task to print the path of the downloaded JAR file
 task printDependencyPath {
+    dependsOn ensureDependenciesResolved
     doLast {
-        // Resolve the dependency and print its path
         configurations.implementation.resolvedConfiguration.resolvedArtifacts.each { artifact ->
             if (artifact.file.name.endsWith('.jar')) {
                 println "Dependency JAR file path: ${artifact.file.absolutePath}"
@@ -87,20 +41,16 @@ task printDependencyPath {
     }
 }
 
+// Task to copy the JAR file to a specific directory
 task copyDependencies(type: Copy) {
-    doLast {
-        // Copy the resolved JAR files to a specific directory
-        configurations.implementation.resolvedConfiguration.resolvedArtifacts.each { artifact ->
-            if (artifact.file.name.endsWith('.jar')) {
-                copy {
-                    from artifact.file
-                    into "$buildDir/libs"
-                }
-            }
-        }
+    dependsOn ensureDependenciesResolved
+    from {
+        configurations.implementation.resolvedConfiguration.resolvedArtifacts.collect { it.file }
     }
+    into "$buildDir/libs"
 }
 
+// Ensure the build depends on both tasks
 tasks.build {
     dependsOn copyDependencies
     dependsOn printDependencyPath
