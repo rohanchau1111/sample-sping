@@ -54,19 +54,13 @@ publishing {
 	//	artifact jarFile
 
 
-		   def jarFiles = fileTree(dir: "$buildDir/libs") {
-                include '**/*.jar' // Include all JAR files
-                exclude '**/*plain.jar' // Exclude any JAR file with 'plain.jar' in its name
+	  def jarFiles = fileTree(dir: "$buildDir/libs") {
+                include '**/*.jar'
+                exclude '**/somefile.jar'
             }
-
             jarFiles.each { file ->
-                // Print out the files to verify which ones are being processed
-                println "Processing artifact: ${file}"
-
-                // Add only those files that are not 'plain.jar'
-                if (!file.name.endsWith('plain.jar')) {
-                    artifact file
-                }
+                artifact file
+            }
 	}
 	  
     }
