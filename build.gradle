@@ -17,73 +17,62 @@ repositories {
 }
 
 dependencies {
-    // implementation 'org.springframework.boot:spring-boot-starter'
-    // implementation 'org.springframework.boot:spring-boot-starter-web'
-    // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    
     compileOnly('org.springframework.boot:spring-boot-starter-validation')
-	implementation('org.springframework.boot:spring-boot-starter')
-	implementation('org.springframework.boot:spring-boot-starter-actuator')
-	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-	implementation('org.springframework.boot:spring-boot-starter-jdbc')
-	implementation('org.springframework.boot:spring-boot-starter-web')
-	implementation('org.liquibase:liquibase-core')
-	implementation('io.micrometer:micrometer-registry-prometheus')
-	implementation('com.h2database:h2')
-	implementation('mysql:mysql-connector-java:8.0.33')
-	implementation('org.postgresql:postgresql')
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-	testImplementation('junit:junit:4.13.2')
+    implementation('org.springframework.boot:spring-boot-starter')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-jdbc')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.liquibase:liquibase-core')
+    implementation('io.micrometer:micrometer-registry-prometheus')
+    implementation('com.h2database:h2')
+    implementation('mysql:mysql-connector-java:8.0.33')
+    implementation('org.postgresql:postgresql')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation('junit:junit:4.13.2')
 }
-
-// jar {
-//     archiveBaseName.set('spring-test')
-//     archiveVersion.set(version)
-// }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-         //  artifact tasks.jar // Specifies that we are publishing a JAR file
-		//   artifact file('build/libs/*.jar') 
-	//  artifact file('build/libs/artifactorytest-0.1.1-SNAPSHOT.jar')
-      def jarFile = file("build/libs/${project.name}-${project.version}.jar")
+            
+            // Define the JAR file path
+            def jarFile = file("build/libs/${project.name}-${project.version}.jar")
             
             // Check if the file name does not contain '-plain' and only then add it
             if (!jarFile.name.contains('-plain')) {
                 artifact(jarFile)
             }
+        }
     }
-    repositories {
+
+    repositories { // This block should be outside of publications
         maven {
             url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
-		  allowInsecureProtocol = true
+            allowInsecureProtocol = true
             credentials {
-               username = 'admin'
-            password = 'DevOps9@'
+                username = 'admin'
+                password = 'DevOps9@'
             }
         }
     }
 }
-}
+
 artifactory {
     contextUrl = 'http://172.27.225.231:8082/artifactory'
     publish {
         repository {
             repoKey = 'gradle-dev-local' // Ensure this matches your Artifactory repository key
             username = 'admin'
-                password = 'DevOps9@'
+            password = 'DevOps9@'
         }
         defaults {
             publications('mavenJava') // Must match the publication name in the publishing block
             publishArtifacts = true
         }
-       
     }
-    
 }
