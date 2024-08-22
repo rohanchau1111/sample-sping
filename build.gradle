@@ -52,11 +52,12 @@ publishing {
          //  artifact tasks.jar // Specifies that we are publishing a JAR file
 		//   artifact file('build/libs/*.jar') 
 	//  artifact file('build/libs/artifactorytest-0.1.1-SNAPSHOT.jar')
-      artifact(file("build/libs/${project.name}-${project.version}.jar")) {
-                // Exclude JARs that contain '-plain' in their name
-                exclude '**/*-plain.jar'
-		//  artifact tasks.jar 
-        }
+      def jarFile = file("build/libs/${project.name}-${project.version}.jar")
+            
+            // Check if the file name does not contain '-plain' and only then add it
+            if (!jarFile.name.contains('-plain')) {
+                artifact(jarFile)
+            }
     }
     repositories {
         maven {
