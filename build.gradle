@@ -50,7 +50,7 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
         def jarFile= file("build/libs/${jar.archiveBaseName.get()}-${jar.archiveVersion.get()}.jar") // Specify the path to the JAR file
-	println 'Processing artifact : ${jarFile.name}'
+	println "Processing artifact : ${jarFile}"
 		artifact jarFile
 	}
 	  
