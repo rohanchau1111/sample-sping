@@ -52,7 +52,9 @@ publishing {
          //  artifact tasks.jar // Specifies that we are publishing a JAR file
 		//   artifact file('build/libs/*.jar') 
 	//  artifact file('build/libs/artifactorytest-0.1.1-SNAPSHOT.jar')
-      artifact file("build/libs/${jar.archiveBaseName.get()}-${jar.archiveVersion.get()}.jar") // Specify the path to the JAR file
+      artifact(file("build/libs/${project.name}-${project.version}.jar")) {
+                // Exclude JARs that contain '-plain' in their name
+                exclude '**/*-plain.jar'
 		//  artifact tasks.jar 
         }
     }
