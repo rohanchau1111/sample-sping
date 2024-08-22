@@ -46,8 +46,7 @@ publishing {
   def jarFiles = fileTree('build/libs').matching {
             //include '**/${project.name}-${project.version}.jar'
       include 'artifactorytest-0.1.1-SNAPSHOT.jar'
-     exclude '**/*-plain.jar'            
-   //exclude '**/${project.name}-${project.version}-plain.jar'
+     exclude '**/*-plain.jar','**/${project.name}-${project.version}-plain.jar'
             }
 
             jarFiles.each { file ->
