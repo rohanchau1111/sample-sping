@@ -43,14 +43,14 @@ publishing {
  //          artifact file("build/libs/${project.name}-${project.version}.jar"){
  // exclude '**/*-plain.jar'
  //          }
-
-          artifact(fileTree("build/libs").matching {
+  def jarFiles = fileTree('build/libs').matching {
                 include '**/*.jar'
-                exclude '**/*-plain.jar' // Exclude plain.jar
-            }) {
-                builtBy tasks.named('jar')
+                exclude '**/*-plain.jar'
             }
-         
+
+            jarFiles.each { file ->
+                artifact(file)
+            }
 
          
             
