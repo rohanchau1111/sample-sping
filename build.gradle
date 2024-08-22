@@ -35,20 +35,19 @@ dependencies {
     testImplementation('junit:junit:4.13.2')
 }
 
-tasks.register('copyFilteredJars', Copy) {
+// Copy task to filter JAR files
+task copyFilteredJars(type: Copy) {
     from 'build/libs'
     into "$buildDir/filteredJars"
     include '**/*.jar'
     exclude '**/*-plain.jar' // Exclude plain.jar
-    // Add more exclude patterns if necessary
-    // exclude '**/*-test.jar'
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             // Ensure the copyFilteredJars task runs before publishing
-            artifact file("$buildDir/filteredJars/${project.name}-${project.version}.jar") {
+            artifact(file("$buildDir/filteredJars/${project.name}-${project.version}.jar")) {
                 builtBy tasks.named('copyFilteredJars')
             }
         }
@@ -79,4 +78,9 @@ artifactory {
             publishArtifacts = true
         }
     }
+}
+
+// Ensure the copyFilteredJars task runs before the publishing task
+tasks.named('publish').configure {
+    dependsOn tasks.named('copyFilteredJars')
 }
