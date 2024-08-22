@@ -49,12 +49,12 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-           def jarFileName = "${jar.archiveBaseName.get()}-${jar.archiveVersion.get()}.jar"
+           // def jarFileName = "${jar.archiveBaseName.get()}-${jar.archiveVersion.get()}.jar"
 
-            // Exclude files matching a specific pattern, e.g., any file containing "-plain"
-            if (!jarFileName.contains("-plain")) {
-                artifact file("build/libs/$jarFileName")
-            }
+           //  // Exclude files matching a specific pattern, e.g., any file containing "-plain"
+           //  if (!jarFileName.contains("-plain")) {
+           //      artifact file("build/libs/$jarFileName")
+           //  }
  
 	}
     }
