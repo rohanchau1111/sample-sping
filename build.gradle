@@ -55,7 +55,15 @@ publishing {
            //  if (!jarFileName.contains("-plain")) {
            //      artifact file("build/libs/$jarFileName")
            //  }
- 
+      def jarFiles = fileTree(dir: "$buildDir/libs") {
+                include '*.jar'           // Include all JAR files
+                exclude '*-plain.jar'     // Exclude JAR files with 'plain' in their name
+            }
+
+            // Add each JAR file (except the excluded ones) as an artifact
+            jarFiles.each { file ->
+                artifact file
+            }
 	}
     }
 }
