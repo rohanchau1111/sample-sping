@@ -55,3 +55,41 @@ tasks.build {
     dependsOn copyDependencies
     dependsOn printDependencyPath
 }
+
+
+----------
+plugins {
+    id 'java'
+}
+
+repositories {
+    maven {
+        url "http://172.27.225.231:8082/artifactory/libs-release-local" // Replace with your Artifactory repository URL
+        credentials {
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+        }
+    }
+}
+
+// Define a custom task to download the WAR file
+task downloadWar(type: Download) {
+    src 'http://172.27.225.231:8082/artifactory/libs-release-local/com/example/my-war-artifact/1.0.0/my-war-artifact-1.0.0.war'
+    dest "$buildDir/libs/my-war-artifact-1.0.0.war"
+}
+
+// Add the downloaded WAR file as a dependency
+dependencies {
+    compileOnly files("$buildDir/libs/my-war-artifact-1.0.0.war")
+}
+
+// Use the custom task in the build lifecycle
+tasks.build {
+    dependsOn downloadWar
+}
+
+// Ensure that the WAR file is available for the `build` task
+tasks.withType(JavaCompile) {
+    dependsOn downloadWar
+}
+
