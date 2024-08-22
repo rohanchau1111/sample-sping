@@ -88,10 +88,13 @@ artifactory {
 }
 
 task deleteUnwantedFiles(type: Delete) {
+ doFirst{
+  
     delete fileTree('build/libs') {
        // include '**/*.jar'
         include '**/*-plain.jar'
     }
+}
 }
 
 tasks.named('publish').configure {
