@@ -4,15 +4,13 @@ implementation 'ch.appuio.techlab:artifactorytest:0.1.1-SNAPSHOT'
 
 
 
-
-
 plugins {
     id 'java'
 }
 
 repositories {
     maven {
-        url "http://172.27.225.231:8082/artifactory/libs-release-local" // Artifactory repository URL
+        url "http://172.27.225.231:8082/artifactory/libs-release-local" // Replace with your Artifactory repository URL
         credentials {
             username = "${artifactory_user}"
             password = "${artifactory_password}"
@@ -21,35 +19,14 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.example:my-war-artifact:1.0.0@war' // Coordinates of the WAR file
+    implementation 'com.example:my-jar-artifact:1.0.0' // Coordinates of the JAR file
 }
 
-task extractWar(type: Copy) {
-    doFirst {
-        // Resolve the dependency at execution time, not configuration time
-        def warFile = configurations.implementation.singleFile
-        from zipTree(warFile)
-    }
-    into "$buildDir/extractedWar"
-}
-
-tasks.compileJava {
-    dependsOn extractWar
-}
-
-task copyLibs(type: Copy) {
-    from configurations.implementation // Copy the dependencies
+task copyDependencies(type: Copy) {
+    from configurations.implementation
     into "$buildDir/libs"
 }
 
-tasks.build {
-    dependsOn copyLibs, extractWar
+build {
+    dependsOn copyDependencies
 }
-
-tasks.jar {
-    archiveFileName = 'my-application.jar' // Name of your final JAR file
-    from("$buildDir/extractedWar") {
-        into 'webapp'
-    }
-}
-
