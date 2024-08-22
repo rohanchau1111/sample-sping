@@ -49,8 +49,9 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            def warFile = fileTree(dir:"$buildDir/libs", include:'artifactorytest-0.1.1-SNAPSHOT.jar').singleFile
-	artifact warFile
+         //   def warFile = fileTree(dir:"$buildDir/libs", include:'artifactorytest-0.1.1-SNAPSHOT.jar').singleFile
+	//artifact warFile
+	artifact file("build/libs/${archiveBaseName.get()}-${archiveVersion.get()}.jar") // Specify the path to the JAR file
 	}
     }
     repositories {
