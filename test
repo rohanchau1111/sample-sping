@@ -68,3 +68,40 @@ tasks.build {
     dependsOn copyDependencies
 }
 
+
+
+
+
+
+
+
+------
+task printDependencyPath {
+    doLast {
+        // Resolve the dependency and print its path
+        configurations.implementation.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+            if (artifact.file.name.endsWith('.jar')) {
+                println "Dependency JAR file path: ${artifact.file.absolutePath}"
+            }
+        }
+    }
+}
+
+task copyDependencies(type: Copy) {
+    doLast {
+        // Copy the resolved JAR files to a specific directory
+        configurations.implementation.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+            if (artifact.file.name.endsWith('.jar')) {
+                copy {
+                    from artifact.file
+                    into "$buildDir/libs"
+                }
+            }
+        }
+    }
+}
+
+tasks.build {
+    dependsOn copyDependencies
+    dependsOn printDependencyPath
+}
