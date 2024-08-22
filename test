@@ -3,7 +3,7 @@
 implementation 'ch.appuio.techlab:artifactorytest:0.1.1-SNAPSHOT'
 
 
-
+implementation 'ch.appuio.techlab:artifactorytest:0.1.1-SNAPSHOT'
 plugins {
     id 'java'
 }
