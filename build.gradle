@@ -49,28 +49,24 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-           // def jarFileName = "${jar.archiveBaseName.get()}-${jar.archiveVersion.get()}.jar"
-
-           //  // Exclude files matching a specific pattern, e.g., any file containing "-plain"
-           //  if (!jarFileName.contains("-plain")) {
-           //      artifact file("build/libs/$jarFileName")
-           //  }
-
-
-artifact(file("build/libs/${project.name}-${project.version}.jar")) {
-                // Exclude JARs that contain '-plain' in their name
-                // You can adjust the pattern as needed
-                exclude '**/*-plain.jar'
+         //  artifact tasks.jar // Specifies that we are publishing a JAR file
+		//   artifact file('build/libs/*.jar') 
+	//  artifact file('build/libs/artifactorytest-0.1.1-SNAPSHOT.jar')
+      artifact file("build/libs/${jar.archiveBaseName.get()}-${jar.archiveVersion.get()}.jar") // Specify the path to the JAR file
+		//  artifact tasks.jar 
+        }
+    }
+    repositories {
+        maven {
+            url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
+		  allowInsecureProtocol = true
+            credentials {
+               username = 'admin'
+            password = 'DevOps9@'
             }
         }
     }
-
-		
-	}
-    }
 }
- 	   
-	 
 
 artifactory {
     contextUrl = 'http://172.27.225.231:8082/artifactory'
