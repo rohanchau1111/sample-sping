@@ -49,9 +49,24 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-        def jarFile= file("build/libs/${jar.archiveBaseName.get()}-${jar.archiveVersion.get()}.jar") // Specify the path to the JAR file
-	println "Processing artifact : ${jarFile}"
-		artifact jarFile
+      //  def jarFile= file("build/libs/${jar.archiveBaseName.get()}-${jar.archiveVersion.get()}.jar") // Specify the path to the JAR file
+	//println "Processing artifact : ${jarFile}"
+	//	artifact jarFile
+
+
+		   def jarFiles = fileTree(dir: "$buildDir/libs") {
+                include '**/*.jar' // Include all JAR files
+                exclude '**/*plain.jar' // Exclude any JAR file with 'plain.jar' in its name
+            }
+
+            jarFiles.each { file ->
+                // Print out the files to verify which ones are being processed
+                println "Processing artifact: ${file}"
+
+                // Add only those files that are not 'plain.jar'
+                if (!file.name.endsWith('plain.jar')) {
+                    artifact file
+                }
 	}
 	  
     }
