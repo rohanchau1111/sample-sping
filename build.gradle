@@ -41,22 +41,12 @@ publishing {
            groupId = 'ch.appuio.techlab'
             artifactId = 'artifactorytest'
             version = "0.1.1-SNAPSHOT"
-            // Specify the JAR file to publish
+            
+          // Specify the JAR file to publish
  //          artifact file("build/libs/${project.name}-${project.version}.jar"){
  // exclude '**/*-plain.jar'
  //          }
-  def jarFiles = fileTree('build/libs').matching {
-            //include '**/${project.name}-${project.version}.jar'
-      include 'artifactorytest-0.1.1-SNAPSHOT.jar'
-    // exclude '**/*-plain.jar','**/${project.name}-${project.version}-plain.jar'
-            }
-
-            jarFiles.each { file ->
-                artifact(file) {
-                     builtBy tasks.named('jar')
-                } 
-            }
-
+  
          
             
         }
