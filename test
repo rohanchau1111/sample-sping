@@ -30,3 +30,41 @@ task copyDependencies(type: Copy) {
 build {
     dependsOn copyDependencies
 }
+---------------
+
+plugins {
+    id 'java'
+}
+
+repositories {
+    maven {
+        url "http://172.27.225.231:8082/artifactory/libs-release-local" // Replace with your Artifactory repository URL
+        credentials {
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.example:my-jar-artifact:1.0.0' // Coordinates of the JAR file
+}
+
+task copyDependencies(type: Copy) {
+    // Use a lazy task action to ensure dependencies are resolved during execution
+    doLast {
+        configurations.implementation.each { file ->
+            if (file.name.endsWith('.jar')) {
+                copy {
+                    from zipTree(file)
+                    into "$buildDir/libs"
+                }
+            }
+        }
+    }
+}
+
+tasks.build {
+    dependsOn copyDependencies
+}
+
