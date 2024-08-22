@@ -38,7 +38,9 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-
+           groupId = 'ch.appuio.techlab'
+            artifactId = 'artifactorytest'
+            version = "0.1.1-SNAPSHOT"
             // Specify the JAR file to publish
  //          artifact file("build/libs/${project.name}-${project.version}.jar"){
  // exclude '**/*-plain.jar'
