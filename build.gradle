@@ -41,10 +41,10 @@ publishing {
             from components.java
             
             // Define the JAR file path
-            def jarFile = file("build/libs/${project.name}-${project.version}.jar")
+          def jarFile = file("build/libs/${project.name}-${project.version}.jar")
             
-            // Check if the file name does not contain '-plain' and only then add it
-            if (!jarFile.name.contains('-plain')) {
+            // Only include the artifact if it doesn't match the exclude pattern
+            if (!jarFile.name.contains('plain') && !jarFile.name.contains('-test')) {
                 artifact(jarFile)
             }
         }
