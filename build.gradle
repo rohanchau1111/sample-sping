@@ -1,4 +1,4 @@
-plugins {
+ plugins {
     id 'java'
     id 'maven-publish'
     id 'com.jfrog.artifactory' version '5.1.12' // Artifactory plugin for Gradle
@@ -28,27 +28,23 @@ dependencies {
     implementation('com.h2database:h2')
     implementation('mysql:mysql-connector-java:8.0.33')
     implementation('org.postgresql:postgresql')
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation('junit:junit:4.13.2')
 }
 
-// Copy task to filter JAR files
-task copyFilteredJars(type: Copy) {
-    from 'build/libs'
-    into "$buildDir/filteredJars"
-    include '**/*.jar'
-    exclude '**/*-plain.jar' // Exclude plain.jar
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            // Ensure the copyFilteredJars task runs before publishing
-            artifact(file("$buildDir/filteredJars/${project.name}-${project.version}.jar")) {
-                builtBy tasks.named('copyFilteredJars')
+            from components.java
+
+            // Specify the JAR file to publish
+            artifact(file("build/libs/${project.name}-${project.version}.jar")) {
+                // Exclude files with specific patterns
+                // For example, excluding 'plain.jar'
+                // This line is optional and only applies if you have multiple artifacts and need to filter
+                // exclude '**/*-plain.jar'
             }
         }
     }
@@ -69,18 +65,18 @@ artifactory {
     contextUrl = 'http://172.27.225.231:8082/artifactory'
     publish {
         repository {
-            repoKey = 'gradle-dev-local'
+            repoKey = 'gradle-dev-local' // Ensure this matches your Artifactory repository key
             username = 'admin'
             password = 'DevOps9@'
         }
         defaults {
-            publications('mavenJava')
+            publications('mavenJava') // Must match the publication name in the publishing block
             publishArtifacts = true
         }
     }
 }
 
-// Ensure the copyFilteredJars task runs before the publishing task
+// Ensure the publishing task runs after necessary tasks are complete
 tasks.named('publish').configure {
-    dependsOn tasks.named('copyFilteredJars')
+    dependsOn tasks.named('publishMavenJavaPublicationToMavenRepository')
 }
