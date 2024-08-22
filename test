@@ -17,11 +17,15 @@ dependencies {
 }
 
 task extractWar(type: Copy) {
-    from zipTree(configurations.implementation.singleFile) // Extract the WAR file
+    doFirst {
+        // Resolve the dependency at execution time, not configuration time
+        def warFile = configurations.implementation.singleFile
+        from zipTree(warFile)
+    }
     into "$buildDir/extractedWar"
 }
 
-compileJava {
+tasks.compileJava {
     dependsOn extractWar
 }
 
@@ -30,11 +34,14 @@ task copyLibs(type: Copy) {
     into "$buildDir/libs"
 }
 
-build.dependsOn(copyLibs, extractWar)
+tasks.build {
+    dependsOn copyLibs, extractWar
+}
 
-jar {
+tasks.jar {
     archiveFileName = 'my-application.jar' // Name of your final JAR file
     from("$buildDir/extractedWar") {
         into 'webapp'
     }
 }
+
