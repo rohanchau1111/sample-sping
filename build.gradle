@@ -39,13 +39,21 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+     def filteredDir = file("$buildDir/filteredJars")
             
-            // Define the JAR file path
-          def jarFile = file("build/libs/${project.name}-${project.version}.jar")
+            // Copy task to filter JAR files
+            tasks.register('copyFilteredJars', Copy) {
+                from 'build/libs'
+                into filteredDir
+                include '**/*.jar'
+                exclude '**/*-plain.jar' // Exclude plain.jar
+                // Add more exclude patterns if necessary
+                // exclude '**/*-test.jar'
+            }
             
-            // Only include the artifact if it doesn't match the exclude pattern
-            if (!jarFile.name.contains('plain') && !jarFile.name.contains('-test')) {
-                artifact(jarFile)
+            // Ensure the copyFilteredJars task runs before publishing
+            artifact(tasks.named('copyFilteredJars')) {
+                builtBy tasks.named('copyFilteredJars')
             }
         }
     }
