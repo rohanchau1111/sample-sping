@@ -49,7 +49,9 @@ publishing {
             }
 
             jarFiles.each { file ->
-                artifact(file)
+                artifact(file) {
+                     builtBy tasks.named('jar')
+                } 
             }
 
          
