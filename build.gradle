@@ -44,7 +44,7 @@ publishing {
  // exclude '**/*-plain.jar'
  //          }
   def jarFiles = fileTree('build/libs').matching {
-                include '**/*.jar'
+                include '**/${project.name}-${project.version}.jar'
                 exclude '**/${project.name}-${project.version}-plain.jar'
             }
 
