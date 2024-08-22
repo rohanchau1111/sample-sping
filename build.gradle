@@ -40,10 +40,10 @@ publishing {
             from components.java
 
             // Specify the JAR file to publish
-          artifact(file("build/libs/${project.name}-${project.version}.jar")) {
+          artifact file("build/libs/${project.name}-${project.version}.jar")) 
                 // Exclude specific files from being published
-                exclude '**/*-plain.jar'
-            }
+            //    exclude '**/*-plain.jar'
+            
         }
     }
 
@@ -74,7 +74,4 @@ artifactory {
     }
 }
 
-// Ensure the publishing task runs after necessary tasks are complete
-tasks.named('publish').configure {
-    dependsOn tasks.named('publishMavenJavaPublicationToMavenRepository')
-}
+
