@@ -49,10 +49,10 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-         //   def warFile = fileTree(dir:"$buildDir/libs", include:'artifactorytest-0.1.1-SNAPSHOT.jar').singleFile
-	//artifact warFile
-	fileTree(dir:"$buildDir/libs",include:'**/*.jar',exclude:'${jar.archiveVersion.get()}-plain.jar').each{file ->
-	 artifact file
+         def warFile = fileTree(dir:"$buildDir/libs", include:'${archiveBaseName.get()}-${archiveVersion.get()}.jar').singleFile
+	artifact warFile
+	//fileTree(dir:"$buildDir/libs",include:'**/*.jar',exclude:'${jar.archiveVersion.get()}-plain.jar').each{file ->
+	 //artifact file
 	}	
 	//artifact file("build/libs/${archiveBaseName.get()}-${archiveVersion.get()}.jar") // Specify the path to the JAR file
 	}
