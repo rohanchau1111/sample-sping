@@ -45,7 +45,7 @@ publishing {
  //          }
   def jarFiles = fileTree('build/libs').matching {
                 include '**/*.jar'
-                exclude '**/*-plain.jar'
+                exclude '**/${project.name}-${project.version}-plain.jar'
             }
 
             jarFiles.each { file ->
