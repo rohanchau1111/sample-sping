@@ -56,14 +56,19 @@ publishing {
            //      artifact file("build/libs/$jarFileName")
            //  }
       def jarFiles = fileTree(dir: "$buildDir/libs") {
-                include '*.jar'           // Include all JAR files
-                exclude '*-plain.jar'     // Exclude JAR files with 'plain' in their name
-            }
+    include '*.jar'           // Include all JAR files
+    exclude '*-plain.jar'     // Exclude JAR files with 'plain' in their name
+}
 
-            // Add each JAR file (except the excluded ones) as an artifact
-            jarFiles.each { file ->
-                artifact file
-            }
+// Add each JAR file (except the excluded ones) as an artifact
+jarFiles.each { file ->
+    if (file.exists()) { // Check if the file exists before adding it
+        println "Adding artifact: ${file.name}" // Print the name of the artifact being added
+        artifact file
+    } else {
+        println "Warning: The artifact file ${file.name} does not exist."
+    }
+} 
 	}
     }
 }
