@@ -55,55 +55,12 @@ publishing {
             if (!jarFileName.contains("-plain")) {
                 artifact file("build/libs/$jarFileName")
             }
-	 
-
-plugins {
-    id 'java'
-    id 'maven-publish'
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-
-            // Define the file tree with a pattern to include only the specific file
-            def specificFile = fileTree(dir: "$buildDir/libs") {
-                include 'artifactorytest-0.1.1-SNAPSHOT.jar' // Only include this specific file
-            }
-
-            specificFile.each { file ->
-                artifact file
-            }
-        }
-    }
-    repositories {
-        maven {
-            url "http://172.27.225.231:8082/artifactory/libs-release-local" // Replace with your Artifactory repository URL
-            credentials {
-                username = "${artifactory_user}"
-                password = "${artifactory_password}"
-            }
-        }
-    }
-}
-
-	   
+ 
 	}
-	  
     }
-
-    }
-	repositories {
-        maven {
-            url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
-		  allowInsecureProtocol = true
-            credentials {
-               username = 'admin'
-            password = 'DevOps9@'
-            }
-        }
-    }
+}
+ 	   
+	 
 
 artifactory {
     contextUrl = 'http://172.27.225.231:8082/artifactory'
