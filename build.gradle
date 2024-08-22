@@ -44,7 +44,7 @@ publishing {
                 // Exclude files with specific patterns
                 // For example, excluding 'plain.jar'
                 // This line is optional and only applies if you have multiple artifacts and need to filter
-                // exclude '**/*-plain.jar'
+                exclude '**/*-plain.jar'
             }
         }
     }
