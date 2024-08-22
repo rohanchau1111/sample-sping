@@ -40,10 +40,8 @@ publishing {
             from components.java
 
             // Specify the JAR file to publish
-            artifact(file("build/libs/${project.name}-${project.version}.jar")) {
-                // Exclude files with specific patterns
-                // For example, excluding 'plain.jar'
-                // This line is optional and only applies if you have multiple artifacts and need to filter
+          artifact(file("build/libs/${project.name}-${project.version}.jar")) {
+                // Exclude specific files from being published
                 exclude '**/*-plain.jar'
             }
         }
