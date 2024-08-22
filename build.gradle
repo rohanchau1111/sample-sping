@@ -35,30 +35,26 @@ dependencies {
     testImplementation('junit:junit:4.13.2')
 }
 
+tasks.register('copyFilteredJars', Copy) {
+    from 'build/libs'
+    into "$buildDir/filteredJars"
+    include '**/*.jar'
+    exclude '**/*-plain.jar' // Exclude plain.jar
+    // Add more exclude patterns if necessary
+    // exclude '**/*-test.jar'
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java
-     def filteredDir = file("$buildDir/filteredJars")
-            
-            // Copy task to filter JAR files
-            tasks.register('copyFilteredJars', Copy) {
-                from 'build/libs'
-                into filteredDir
-                include '**/*.jar'
-                exclude '**/*-plain.jar' // Exclude plain.jar
-                // Add more exclude patterns if necessary
-                // exclude '**/*-test.jar'
-            }
-            
             // Ensure the copyFilteredJars task runs before publishing
-            artifact(tasks.named('copyFilteredJars')) {
+            artifact file("$buildDir/filteredJars/${project.name}-${project.version}.jar") {
                 builtBy tasks.named('copyFilteredJars')
             }
         }
     }
 
-    repositories { // This block should be outside of publications
+    repositories {
         maven {
             url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
             allowInsecureProtocol = true
@@ -74,12 +70,12 @@ artifactory {
     contextUrl = 'http://172.27.225.231:8082/artifactory'
     publish {
         repository {
-            repoKey = 'gradle-dev-local' // Ensure this matches your Artifactory repository key
+            repoKey = 'gradle-dev-local'
             username = 'admin'
             password = 'DevOps9@'
         }
         defaults {
-            publications('mavenJava') // Must match the publication name in the publishing block
+            publications('mavenJava')
             publishArtifacts = true
         }
     }
