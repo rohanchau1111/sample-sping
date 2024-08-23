@@ -84,17 +84,17 @@ artifactory {
     }
 }
 
-task deleteUnwantedFiles(type: Delete) {
- doFirst{
+// task deleteUnwantedFiles(type: Delete) {
+//  doFirst{
   
-    delete fileTree('build/libs') {
-       // include '**/*.jar'
-        include '**/*-plain.jar'
-    }
-}
-}
+//     delete fileTree('build/libs') {
+//        // include '**/*.jar'
+//         include '**/*-plain.jar'
+//     }
+// }
+// }
 
-tasks.named('publish').configure {
-    dependsOn deleteUnwantedFiles
-}
+// tasks.named('publish').configure {
+//     dependsOn deleteUnwantedFiles
+// }
 
