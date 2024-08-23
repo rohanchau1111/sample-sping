@@ -45,8 +45,8 @@ publishing {
          bootJava(MavenPublication) {
             version = "${version}-SNAPSHOT"
             
-            from components.web
-            artifact tasks.named("bootWar")
+            from components.java
+            artifact tasks.named("bootJar")
          }
          
             
