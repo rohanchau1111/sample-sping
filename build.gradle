@@ -1,8 +1,8 @@
 plugins {
-  id 'java'
-	id 'maven-publish'
-  id 'org.springframework.boot' version '3.3.2'
-  id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'maven-publish'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'ch.appuio.techlab'
@@ -11,57 +11,40 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
-  mavenCentral()
-}
-
-bootJar {
-	archiveBaseName.set('springboots2idemo')
-	archiveVersion.set(version)
-	
+    mavenCentral()
+    maven {
+        url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
+        allowInsecureProtocol = true
+        credentials {
+            username = 'admin'
+            password = 'DevOps9@'
+        }
+    }
 }
 
 dependencies {
-
-	
-	compileOnly('org.springframework.boot:spring-boot-starter-validation')
-	implementation 'ch.appuio.techlab:artifactorytest:0.1.1--SNAPSHOT'
-	
-	implementation('org.springframework.boot:spring-boot-starter')
-	implementation('org.springframework.boot:spring-boot-starter-actuator')
-	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-	implementation('org.springframework.boot:spring-boot-starter-jdbc')
-	implementation('org.springframework.boot:spring-boot-starter-web')
-	implementation('org.liquibase:liquibase-core')
-	implementation('io.micrometer:micrometer-registry-prometheus')
-	implementation('com.h2database:h2')
-	implementation('mysql:mysql-connector-java:8.0.33')
-	implementation('org.postgresql:postgresql')
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-	testImplementation('junit:junit:4.13.2')
-}
-configurations {
-    resolvedImplementation {
-        canBeResolved = true
-        canBeConsumed = false
-        extendsFrom configurations.implementation
+    compileOnly 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'ch.appuio.techlab:artifactorytest:0.1.1-SNAPSHOT'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'com.h2database:h2'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    testImplementation 'junit:junit:4.13.2'
 }
 
-// Task to ensure dependencies are resolved
-task ensureDependenciesResolved {
+tasks.register('printDependencyPath') {
     doLast {
-        configurations.resolvedImplementation.resolve()
-    }
-}
-
-// Task to print the path of the downloaded JAR file
-task printDependencyPath {
-    dependsOn ensureDependenciesResolved
-    doLast {
-        configurations.resolvedImplementation.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+        configurations.runtimeClasspath.resolvedConfiguration.resolvedArtifacts.each { artifact ->
             if (artifact.file.name.endsWith('.jar')) {
                 println "Dependency JAR file path: ${artifact.file.absolutePath}"
             }
@@ -69,36 +52,31 @@ task printDependencyPath {
     }
 }
 
-// Task to copy the JAR file to a specific directory
-task copyDependencies(type: Copy) {
-    dependsOn ensureDependenciesResolved
-    from {
-        configurations.resolvedImplementation.resolvedConfiguration.resolvedArtifacts.collect { it.file }
-    }
+tasks.register('copyDependencies', Copy) {
+    from configurations.runtimeClasspath
     into "$buildDir/libs"
 }
 
-// Ensure the build depends on both tasks
-tasks.build {
-    dependsOn copyDependencies
-    dependsOn printDependencyPath
+tasks.named('build') {
+    dependsOn 'copyDependencies'
+    dependsOn 'printDependencyPath'
 }
 
-publishing{
-  publications{
-   mavenJava(MavenPublication){
-	  from components.java 
-	   artifact tasks.bootJar
-   }
-  }
-repositories{
-   maven{
-      url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
-	    allowInsecureProtocol = true
-	   credentials{
-           username ='admin'
-		   password='DevOps9@'
-	   }
-   }
-}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact tasks.named('bootJar')
+        }
+    }
+    repositories {
+        maven {
+            url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
+            allowInsecureProtocol = true
+            credentials {
+                username = 'admin'
+                password = 'DevOps9@'
+            }
+        }
+    }
 }
