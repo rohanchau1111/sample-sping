@@ -94,6 +94,9 @@ artifactory {
 // }
 // }
 
+task sample {
+  println "Helloworld"
+}
 // tasks.named('publish').configure {
 //     dependsOn deleteUnwantedFiles
 // }
