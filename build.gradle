@@ -42,13 +42,16 @@ publishing {
         //     artifactId = 'artifactorytest'
         //     version = "0.1.1-SNAPSHOT"
         // }    
-         bootJava(MavenPublication) {
-            version = "${version}-SNAPSHOT"
+         // bootJava(MavenPublication) {
+         //    version = "${version}-SNAPSHOT"
             
-            from components.java
-            artifact tasks.named("bootJar")
-         }
-         
+         //    from components.java
+         //    artifact tasks.named("bootJar")
+         // }
+
+        bootJava(MavenPublication) {
+      artifact bootJar
+    }
             
         }
     
