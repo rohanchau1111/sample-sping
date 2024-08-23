@@ -36,12 +36,12 @@ dependencies {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
-           groupId = 'ch.appuio.techlab'
-            artifactId = 'artifactorytest'
-            version = "0.1.1-SNAPSHOT"
-        }    
+        // mavenJava(MavenPublication) {
+        //     from components.java
+        //    groupId = 'ch.appuio.techlab'
+        //     artifactId = 'artifactorytest'
+        //     version = "0.1.1-SNAPSHOT"
+        // }    
          bootJava(MavenPublication) {
             version = "${version}-SNAPSHOT"
             
