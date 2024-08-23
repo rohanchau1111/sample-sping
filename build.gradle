@@ -55,6 +55,7 @@ tasks.register('printDependencyPath') {
 tasks.register('copyDependencies', Copy) {
     from configurations.runtimeClasspath
     into "$buildDir/libs"
+     println "$buildDir/libs"
 }
 
 tasks.named('build') {
