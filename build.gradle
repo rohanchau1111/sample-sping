@@ -1,4 +1,4 @@
-plugins {
+plugis {
     id 'java'
     id 'maven-publish'
     id 'org.springframework.boot' version '3.3.2'
