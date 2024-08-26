@@ -9,17 +9,17 @@ pipeline {
      //}
      
     stages {
-        stage('clone') {
-            steps {
+   //      stage('clone') {
+   //          steps {
             
-            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/rohanchau1111/sample-sping.git']])   
-        //  git branch: 'main', url: 'https://github.com/appuio/example-spring-boot-helloworld.git'
-   //  checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/appuio/example-spring-boot-helloworld.git']])   
-              sh 'ls -l'
-                sh 'sudo chmod 777 *'
+   //          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/rohanchau1111/sample-sping.git']])   
+   //      //  git branch: 'main', url: 'https://github.com/appuio/example-spring-boot-helloworld.git'
+   // //  checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/appuio/example-spring-boot-helloworld.git']])   
+   //            sh 'ls -l'
+   //              sh 'sudo chmod 777 *'
                 
-            }
-        }
+   //          }
+   //      }
         
          stage('clean') {
             steps {
