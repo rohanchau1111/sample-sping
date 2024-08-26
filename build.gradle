@@ -58,11 +58,6 @@ task copyDependencies(type: Copy) {
     into "$buildDir/libs"
 }
 
-// Ensure the build depends on both tasks
-tasks.build {
-    dependsOn copyDependencies
-    dependsOn printDependencyPath
-}
 
 task createZip(type: Zip) {
 
@@ -106,4 +101,12 @@ artifactory {
          publishArtifacts = true
         }
     }
+}
+
+
+// Ensure the build depends on both tasks
+tasks.build {
+    dependsOn copyDependencies
+    dependsOn printDependencyPath
+    dependsOn  createZip
 }
