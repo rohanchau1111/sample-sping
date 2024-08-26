@@ -4,18 +4,6 @@ plugins {
   id 'com.jfrog.artifactory' version '5.1.12'
 }
 
-repositories {
-    maven {
-        url "http://172.27.225.231:8082/artifactory/gradle-dev-local" // Replace with your Artifactory repository URL
-      allowInsecureProtocol=true
-      credentials {
-            username = "admin"
-            password = "DevOp9@"
-        }
-//     allowInsecureProtocol = true
-    }
-}
-
 dependencies {
 //    implementation 'com.example:my-jar-artifact:1.0.0' // Coordinates of the JAR file
     implementation 'ch.appuio.techlab:artifactorytest:0.1.1'
@@ -84,6 +72,17 @@ publishing {
    extension = 'zip'
 }
 }
+}
+    repositories {
+    maven {
+        url "http://172.27.225.231:8082/artifactory/gradle-dev-local" // Replace with your Artifactory repository URL
+      allowInsecureProtocol=true
+      credentials {
+            username = "admin"
+            password = "DevOp9@"
+        }
+//     allowInsecureProtocol = true
+    }
 }
 }
 
