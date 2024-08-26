@@ -10,6 +10,17 @@ dependencies {
     
 }
 
+    repositories {
+    maven {
+        url "http://172.27.225.231:8082/artifactory/gradle-dev-local" // Replace with your Artifactory repository URL
+      allowInsecureProtocol=true
+      credentials {
+            username = "admin"
+            password = "DevOp9@"
+        }
+//     allowInsecureProtocol = true
+    }
+}
 // Create a custom configuration that extends 'implementation' and is resolvable
 configurations {
     resolvedImplementation {
