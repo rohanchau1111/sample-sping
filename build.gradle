@@ -149,5 +149,5 @@ artifactory {
 tasks.build {
     dependsOn copyDependencies
     dependsOn printDependencyPath
-    dependsOn  createZip
+   // dependsOn  createZip
 }
