@@ -86,22 +86,22 @@ task copyDependencies(type: Copy) {
 }
 
 
-task createZip(type: Zip) {
+// task createZip(type: Zip) {
 
-    //from file('test')
-   from file('/home/rohan/.jenkins/workspace/job2/src/main/resources/application.properties')
-    archiveFileName.set('test.zip')
-    destinationDirectory.set(file("$buildDir/libs/"))
+//     //from file('test')
+//    from file('/home/rohan/.jenkins/workspace/job2/src/main/resources/application.properties')
+//     archiveFileName.set('test.zip')
+//     destinationDirectory.set(file("$buildDir/libs/"))
 
-  //  from "$buildDir/libs/"
-   doLast {
-   println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
-}
-   doFirst {
+//   //  from "$buildDir/libs/"
+//    doLast {
+//    println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
+// }
+//    doFirst {
 
-   println 'archiving file ....${archiveName}'
-}
-}
+//    println 'archiving file ....${archiveName}'
+// }
+// }
 
 
  publishing {
@@ -109,9 +109,9 @@ task createZip(type: Zip) {
       mavenJava(MavenPublication) {
        artifactId ='test'
       version = '1.0'
-      artifact("${buildDir}/libs/test.zip") {
+      artifact("${buildDir}/libs/test") {
        classifier = ''
-       extension = 'zip'
+       //extension = 'zip'
     }
  }
  }
