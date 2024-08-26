@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'maven-publish'
   id 'com.jfrog.artifactory' version '5.1.12'
+       id 'org.springframework.boot' version '3.3.2'
 }
 
 
