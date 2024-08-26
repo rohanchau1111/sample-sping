@@ -88,7 +88,8 @@ task copyDependencies(type: Copy) {
 
 task createZip(type: Zip) {
 
-    from file('test')
+    //from file('test')
+   from file('${buildDir/src/main/resources/application.properties}')
     archiveFileName.set('test.zip')
     destinationDirectory.set(file("$buildDir/libs/"))
 
