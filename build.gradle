@@ -144,8 +144,6 @@ artifactory {
         }
     }
 }
-
-
 // Ensure the build depends on both tasks
 tasks.build {
     dependsOn copyDependencies
