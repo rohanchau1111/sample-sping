@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-//    implementation 'com.example:my-jar-artifact:1.0.0' // Coordinates of the JAR file
+  implementation 'com.example:my-jar-artifact:1.0.0' // Coordinates of the JAR file
     implementation 'ch.appuio.techlab:artifactorytest:0.1.1-SNAPSHOT'
     
 }
