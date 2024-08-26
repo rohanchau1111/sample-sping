@@ -27,6 +27,24 @@ dependencies {
  // implementation 'com.example:my-jar-artifact:1.0.0' // Coordinates of the JAR file
     implementation 'ch.appuio.techlab:artifactorytest:0.1.1'   
     implementation 'ch.appuio.techlab:artifactorytest:0.1.1-SNAPSHOT'
+
+
+
+    compileOnly('org.springframework.boot:spring-boot-starter-validation')
+    implementation('org.springframework.boot:spring-boot-starter')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-jdbc')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.liquibase:liquibase-core')
+    implementation('io.micrometer:micrometer-registry-prometheus')
+    implementation('com.h2database:h2')
+    implementation('mysql:mysql-connector-java:8.0.33')
+    implementation('org.postgresql:postgresql')
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation('junit:junit:4.13.2')
     
 }
 
