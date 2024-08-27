@@ -23,9 +23,14 @@ pipeline {
                     env.PROPERTY1 = propertiesMap['artifactoryURL'] ?: 'defaultURL'
                     env.PROPERTY2 = propertiesMap['artifactoryRepo'] ?: 'defaultRepo'
 
+                    env.PROPERTY3 = propertiesMap['artifactoryUser'] ?: 'defaultUser'
+                    env.PROPERTY4 = propertiesMap['artifactoryPassword'] ?: 'defaultPassword'
+
                     // Debugging: print properties
                     echo "PROPERTY1: ${env.PROPERTY1}"
                     echo "PROPERTY2: ${env.PROPERTY2}"
+                      echo "PROPERTY3: ${env.PROPERTY3}"
+                    echo "PROPERTY4: ${env.PROPERTY4}"
                 }
             }
         }
