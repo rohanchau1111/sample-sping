@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // Default values for properties
+        // Initialize default values
         PROPERTY1 = ''
         PROPERTY2 = ''
     }
@@ -11,8 +11,9 @@ pipeline {
         stage('Read Properties') {
             steps {
                 script {
-                    // Read properties from gradle.properties
-                    def props = readFile('gradle.properties').trim()
+                    // Read and parse gradle.properties
+                    def propsFile = 'gradle.properties'
+                    def props = readFile(propsFile).trim()
 
                     // Initialize a map to hold properties
                     def propertiesMap = [:]
@@ -29,7 +30,7 @@ pipeline {
                     env.PROPERTY1 = propertiesMap['artifactoryURL'] ?: 'defaultURL'
                     env.PROPERTY2 = propertiesMap['artifactoryRepo'] ?: 'defaultRepo'
 
-                    // Debugging: print properties
+                    // Debugging: print environment variables
                     echo "PROPERTY1: ${env.PROPERTY1}"
                     echo "PROPERTY2: ${env.PROPERTY2}"
                 }
@@ -47,12 +48,9 @@ pipeline {
             steps {
                 sh 'ls -la'
                 script {
-                    // Debugging: print environment variables to ensure they are set
-                    echo "Building with ARTIFACTORY_URL: ${env.PROPERTY1} and ARTIFACTORY_REPO: ${env.PROPERTY2}"
-
-                    // Pass the properties as parameters to the Gradle build
+                    // Pass properties to Gradle build
                     sh """
-                        echo "Gradle build with ARTIFACTORY_URL: ${env.PROPERTY1} and ARTIFACTORY_REPO: ${env.PROPERTY2}"
+                        echo "Building with ARTIFACTORY_URL: ${env.PROPERTY1} and ARTIFACTORY_REPO: ${env.PROPERTY2}"
                         sudo ./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}
                     """
                 }
