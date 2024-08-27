@@ -11,8 +11,8 @@ pipeline {
         stage('Read Properties') {
             steps {
                 script {
-                    // Read properties from the file
-                    def props = sh(script: 'cat gradle.properties | grep -v "^#" | xargs', returnStdout: true).trim()
+                    // Read properties from gradle.properties
+                    def props = readFile('gradle.properties').trim()
 
                     // Initialize a map to hold properties
                     def propertiesMap = [:]
@@ -26,8 +26,8 @@ pipeline {
                     }
 
                     // Set environment variables
-                    env.PROPERTY1 = propertiesMap['artifactoryURL'] ?: ''
-                    env.PROPERTY2 = propertiesMap['artifactoryRepo'] ?: ''
+                    env.PROPERTY1 = propertiesMap['artifactoryURL'] ?: 'defaultURL'
+                    env.PROPERTY2 = propertiesMap['artifactoryRepo'] ?: 'defaultRepo'
                     
                     // Debugging: print properties
                     echo "PROPERTY1: ${env.PROPERTY1}"
@@ -48,7 +48,7 @@ pipeline {
                 sh 'ls -la'
                 script {
                     // Pass the properties as parameters to the Gradle build
-                    sh "sudo ./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}"
+                    sh "./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}"
                 }
             }
         }
