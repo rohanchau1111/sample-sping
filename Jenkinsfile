@@ -48,7 +48,7 @@ pipeline {
                 sh 'ls -la'
                 script {
                     // Pass the properties as parameters to the Gradle build
-                    sh "./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}"
+                    sh "sudo ./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}"
                 }
             }
         }
