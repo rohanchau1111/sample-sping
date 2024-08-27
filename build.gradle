@@ -131,12 +131,12 @@ task copyDependencies(type: Copy) {
 }
 
 artifactory {
-    contextUrl = 'http://172.27.225.231:8082/artifactory'
+    contextUrl = '$artifactoryURL'
     publish {
         repository {
-            repoKey = 'gradle-dev-local' // Ensure this matches your Artifactory repository key
-            username = 'admin'
-            password = 'DevOps9@'
+            repoKey = '$artifactoryRepo' // Ensure this matches your Artifactory repository key
+            username = '$artifactoryUser'
+            password = '$artifactoryPassword'
         }
         defaults {
           publications('mavenJava') // Must match the publication name in the publishing block
