@@ -38,7 +38,8 @@ pipeline {
            stage('build') {
             steps {
                 sh 'ls -la'
-
+             script{
+                 
                 def properties = readProperties file: 'gradle.properties'
                  env.PROPERTY1 = properties['artifactoryURL']
 
@@ -51,6 +52,7 @@ pipeline {
              //sh 'sudo ./gradlewJar'
              //  archiveArtifacts artifacts: 'build/libs/*.jar', followSymlinks: false
             }
+        }
         }
         
         
