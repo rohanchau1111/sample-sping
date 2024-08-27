@@ -6,10 +6,6 @@ pipeline {
      PROPERTY2 = ''
           
          
-         // ARTIFACTORY_SERVER_ID='abcd'
-      //ARTIFACTORY_REPO='gradle-release-loca'
-   //   ARTIFACTORY_CREDENTIALS='artifactorycreds'
-         
      }
      
     stages {
@@ -40,18 +36,21 @@ pipeline {
                 sh 'ls -la'
              script{
                  
-             def props = sh(script: 'cat gradle.properties', returnStdout: true).trim()
-                    def propsMap = [:]
+        
+                    def props = sh(script: "cat gradle.properties | grep -v '^#' | xargs", returnStdout: true).trim()
+                    def propertiesMap = [:]
                     
-                    // Parse properties
-                    props.split('\n').each { line ->
-                        def (key, value) = line.split('=')
-                        propsMap[key.trim()] = value.trim()
+                    // Split properties into key-value pairs
+                    props.split(' ').each { prop ->
+                        def pair = prop.split('=')
+                        if (pair.length == 2) {
+                            propertiesMap[pair[0]] = pair[1]
+                        }
                     }
                     
-                    // Set environment variables
-                    env.PROPERTY1 = propsMap['property1'] ?: ''
-                    env.PROPERTY2 = propsMap['property2'] ?: ''
+                    // Store properties in environment variables
+                    env.PROPERTY1 = propertiesMap['artifactoryURL']
+                    env.PROPERTY2 = propertiesMap['artifactoryRepo']
                     
                     // Debugging: print properties
                     echo "PROPERTY1: ${env.PROPERTY1}"
