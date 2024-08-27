@@ -25,10 +25,10 @@ pipeline {
                         }
                     }
 
-                    // Set environment variables
+                    // Set environment variables with default fallback
                     env.PROPERTY1 = propertiesMap['artifactoryURL'] ?: 'defaultURL'
                     env.PROPERTY2 = propertiesMap['artifactoryRepo'] ?: 'defaultRepo'
-                    
+
                     // Debugging: print properties
                     echo "PROPERTY1: ${env.PROPERTY1}"
                     echo "PROPERTY2: ${env.PROPERTY2}"
@@ -47,8 +47,14 @@ pipeline {
             steps {
                 sh 'ls -la'
                 script {
+                    // Debugging: print environment variables to ensure they are set
+                    echo "Building with ARTIFACTORY_URL: ${env.PROPERTY1} and ARTIFACTORY_REPO: ${env.PROPERTY2}"
+
                     // Pass the properties as parameters to the Gradle build
-                    sh "sudo ./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}"
+                    sh """
+                        echo "Gradle build with ARTIFACTORY_URL: ${env.PROPERTY1} and ARTIFACTORY_REPO: ${env.PROPERTY2}"
+                        sudo ./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}
+                    """
                 }
             }
         }
