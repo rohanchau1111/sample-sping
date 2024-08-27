@@ -1,14 +1,14 @@
 //  checkout BbS(branches: [[name: '*/feature/identity_liberty_test']], credentialsId: 'bitbucket-rohan', extensions: [], id: 'a280518a-e9d2-40f7-912b-dc607ff921d8', mirrorName: '', projectName: 'PEM', repositoryName: 'identity-service', serverId: '53ce335b-2ec9-43a6-9f84-9de1da3cab99', sshCredentialsId: 'bitbucket-Rohan')
 
-   stage('Build') {
-            steps {
-                // Run Gradle build with the property passed as a parameter
-                script {
-                    def propertyValue = params.propertyName
-                    sh "./gradlew build -PpropertyName=${propertyValue}"
-                }
-            }
-        }
+   // stage('Build') {
+   //          steps {
+   //              // Run Gradle build with the property passed as a parameter
+   //              script {
+   //                  def propertyValue = params.propertyName
+   //                  sh "./gradlew build -PpropertyName=${propertyValue}"
+   //              }
+   //          }
+   //      }
 
 pipeline {
     agent any
@@ -122,78 +122,78 @@ pipeline {
 
 
 
-pipeline {
-    agent any
+// pipeline {
+//     agent any
  
-    parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 'feature/identity_liberty_test', description: 'Branch name to checkout')
-        string(name: 'REPOSITORY_NAME', defaultValue: 'identity-service', description: 'Repository name')
-        string(name: 'PROJECT_NAME', defaultValue: 'PEM', description: 'Project name')
-    }
+//     parameters {
+//         string(name: 'BRANCH_NAME', defaultValue: 'feature/identity_liberty_test', description: 'Branch name to checkout')
+//         string(name: 'REPOSITORY_NAME', defaultValue: 'identity-service', description: 'Repository name')
+//         string(name: 'PROJECT_NAME', defaultValue: 'PEM', description: 'Project name')
+//     }
  
-    stages {
-        stage('Checkout from Bitbucket') {
-            steps {
-                script {
-                    bbs_checkout (
-                        projectName: "${params.PROJECT_NAME}",
-                        repositoryName: "${params.REPOSITORY_NAME}",
-                        branches: [[name: "*/${params.BRANCH_NAME}"]],
-                        credentialsId: 'bitbucket-rohan',
-                        sshCredentialsId: 'bitbucket-Rohan',
-                        serverId: '53ce335b-2ec9-43a6-9f84-9de1da3cab99'
-                    )
-                }
-            }
-        }
+//     stages {
+//         stage('Checkout from Bitbucket') {
+//             steps {
+//                 script {
+//                     bbs_checkout (
+//                         projectName: "${params.PROJECT_NAME}",
+//                         repositoryName: "${params.REPOSITORY_NAME}",
+//                         branches: [[name: "*/${params.BRANCH_NAME}"]],
+//                         credentialsId: 'bitbucket-rohan',
+//                         sshCredentialsId: 'bitbucket-Rohan',
+//                         serverId: '53ce335b-2ec9-43a6-9f84-9de1da3cab99'
+//                     )
+//                 }
+//             }
+//         }
  
-        stage('Read and Export Properties') {
-            steps {
-                script {
-                    // Shell script to read and export properties
-                    sh '''
-                        #!/bin/bash
-                        trim() {
-                            local var="$1"
-                            var="${var#"${var%%[![:space:]]*}"}"   # remove leading whitespace characters
-                            var="${var%"${var##*[![:space:]]}"}"   # remove trailing whitespace characters
-                            echo -n "$var"
-                        }
+//         stage('Read and Export Properties') {
+//             steps {
+//                 script {
+//                     // Shell script to read and export properties
+//                     sh '''
+//                         #!/bin/bash
+//                         trim() {
+//                             local var="$1"
+//                             var="${var#"${var%%[![:space:]]*}"}"   # remove leading whitespace characters
+//                             var="${var%"${var##*[![:space:]]}"}"   # remove trailing whitespace characters
+//                             echo -n "$var"
+//                         }
  
-                        while IFS='=' read -r key value; do
-                            if [[ ! -z "$key" && ! "$key" =~ ^# ]]; then
-                                key=$(trim "$key")
-                                value=$(trim "$value")
-                                export $key="$value"
-                            fi
-                        done < gradle.properties
+//                         while IFS='=' read -r key value; do
+//                             if [[ ! -z "$key" && ! "$key" =~ ^# ]]; then
+//                                 key=$(trim "$key")
+//                                 value=$(trim "$value")
+//                                 export $key="$value"
+//                             fi
+//                         done < gradle.properties
  
                       
-                         chmod +x gradlew
+//                          chmod +x gradlew
                          
-                         echo '---'
-                          # Print the properties for debugging
-                        echo "Artifactory URL: $artifactoryURL"
-                        echo "Artifactory Repo: $artifactoryRepo"
-                        echo "Artifactory User: $artifactoryUser"
-                        echo "Artifactory Password: $artifactoryPassword"
-                        echo "Branch ID: $branchId"
+//                          echo '---'
+//                           # Print the properties for debugging
+//                         echo "Artifactory URL: $artifactoryURL"
+//                         echo "Artifactory Repo: $artifactoryRepo"
+//                         echo "Artifactory User: $artifactoryUser"
+//                         echo "Artifactory Password: $artifactoryPassword"
+//                         echo "Branch ID: $branchId"
                      
                      
-                      chmod +x gradlew
-                     ./gradlew clean build \
-                            -PartifactoryURL=$artifactoryURL \
-                            -PartifactoryRepo=$artifactoryRepo \
-                            -PartifactoryUser=$artifactoryUser \
-                            -PartifactoryPassword=$artifactoryPassword \
-                            -PbranchId=$branchId
-                    '''
+//                       chmod +x gradlew
+//                      ./gradlew clean build \
+//                             -PartifactoryURL=$artifactoryURL \
+//                             -PartifactoryRepo=$artifactoryRepo \
+//                             -PartifactoryUser=$artifactoryUser \
+//                             -PartifactoryPassword=$artifactoryPassword \
+//                             -PbranchId=$branchId
+//                     '''
                   
-                }
-            }
-        }
+//                 }
+//             }
+//         }
  
-    }
-}
+//     }
+// }
 
  
