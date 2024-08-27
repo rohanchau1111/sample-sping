@@ -40,12 +40,22 @@ pipeline {
                 sh 'ls -la'
              script{
                  
-                def properties = readProperties file: 'gradle.properties'
-                 env.PROPERTY1 = properties['artifactoryURL']
-
-
-                 echo '${env.PROPERTY1}'
- 
+             def props = sh(script: 'cat gradle.properties', returnStdout: true).trim()
+                    def propsMap = [:]
+                    
+                    // Parse properties
+                    props.split('\n').each { line ->
+                        def (key, value) = line.split('=')
+                        propsMap[key.trim()] = value.trim()
+                    }
+                    
+                    // Set environment variables
+                    env.PROPERTY1 = propsMap['property1'] ?: ''
+                    env.PROPERTY2 = propsMap['property2'] ?: ''
+                    
+                    // Debugging: print properties
+                    echo "PROPERTY1: ${env.PROPERTY1}"
+                    echo "PROPERTY2: ${env.PROPERTY2}"
                     
               sh 'sudo ./gradlew  build -PartifactoryURL=${env.PROPERTY1}'
              //  archiveArtifacts artifacts: 'build/libs/*.jar', followSymlinks: false
