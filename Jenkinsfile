@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // Initialize default values
+        // Default values for properties
         PROPERTY1 = ''
         PROPERTY2 = ''
     }
@@ -11,11 +11,8 @@ pipeline {
         stage('Read Properties') {
             steps {
                 script {
-                    // Read and parse gradle.properties
-                    def propsFile = 'gradle.properties'
-                    def props = readFile(propsFile).trim()
-
-                    // Initialize a map to hold properties
+                    // Read properties from gradle.properties
+                    def props = readFile('gradle.properties').trim()
                     def propertiesMap = [:]
 
                     // Split properties into key-value pairs
@@ -26,11 +23,11 @@ pipeline {
                         }
                     }
 
-                    // Set environment variables with default fallback
-                    env.PROPERTY1 = propertiesMap['artifactoryURL'] ?: 'defaultURL'
-                    env.PROPERTY2 = propertiesMap['artifactoryRepo'] ?: 'defaultRepo'
+                    // Set environment variables with default values
+                    env.PROPERTY1 = propertiesMap.get('artifactoryURL', 'defaultURL')
+                    env.PROPERTY2 = propertiesMap.get('artifactoryRepo', 'defaultRepo')
 
-                    // Debugging: print environment variables
+                    // Debugging: print properties
                     echo "PROPERTY1: ${env.PROPERTY1}"
                     echo "PROPERTY2: ${env.PROPERTY2}"
                 }
@@ -40,19 +37,15 @@ pipeline {
         stage('Clean') {
             steps {
                 sh 'ls -la'
-                sh 'sudo ./gradlew clean'
+                sh './gradlew clean' // Removed 'sudo' as it's generally not needed in Jenkins
             }
         }
 
         stage('Build') {
             steps {
-                sh 'ls -la'
                 script {
-                    // Pass properties to Gradle build
-                    sh """
-                        echo "Building with ARTIFACTORY_URL: ${env.PROPERTY1} and ARTIFACTORY_REPO: ${env.PROPERTY2}"
-                        sudo ./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}
-                    """
+                    // Pass the properties as parameters to the Gradle build
+                    sh "./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}"
                 }
             }
         }
@@ -62,7 +55,7 @@ pipeline {
                 sh 'pwd'
                 sh 'cd build/libs/'
                 sh 'ls -l'
-                sh 'sudo ./gradlew artifactoryPublish'
+                sh './gradlew artifactoryPublish' // Removed 'sudo' as it's generally not needed in Jenkins
             }
         }
     }
