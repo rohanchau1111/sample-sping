@@ -1,12 +1,16 @@
 pipeline {
     agent any
   
-     //environment {
-     // ARTIFACTORY_SERVER_ID='abcd'
+     environment {
+     PROPERTY1 = ''
+     PROPERTY2 = ''
+          
+         
+         // ARTIFACTORY_SERVER_ID='abcd'
       //ARTIFACTORY_REPO='gradle-release-loca'
    //   ARTIFACTORY_CREDENTIALS='artifactorycreds'
          
-     //}
+     }
      
     stages {
    //      stage('clone') {
@@ -34,7 +38,15 @@ pipeline {
            stage('build') {
             steps {
                 sh 'ls -la'
-              sh 'sudo ./gradlew  build'
+
+                def properties = readProperties file: 'gradle.properties'
+                 env.PROPERTY1 = properties['artifactoryURL']
+
+
+                 echo '${env.PROPERTY1}'
+ 
+                    
+              sh 'sudo ./gradlew  build -PartifactoryURL=${env.PROPERTY1}'
              //  archiveArtifacts artifacts: 'build/libs/*.jar', followSymlinks: false
              //sh 'sudo ./gradlewJar'
              //  archiveArtifacts artifacts: 'build/libs/*.jar', followSymlinks: false
