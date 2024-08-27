@@ -70,12 +70,12 @@ publishing {
 
 
 artifactory {
-    contextUrl = '$artifactoryURL'
+    contextUrl = "$artifactoryURL"
     publish {
         repository {
-            repoKey = '$artifactoryRepo' // Ensure this matches your Artifactory repository key
-            username = '$artifactoryUser'
-            password = '$artifactoryPassword'
+            repoKey = "$artifactoryRepo" // Ensure this matches your Artifactory repository key
+            username = "$artifactoryUser"
+            password = "$artifactoryPassword"
         }
         defaults {
         //  publications('mavenJava') // Must match the publication name in the publishing block
