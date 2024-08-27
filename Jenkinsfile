@@ -1,36 +1,28 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'ARTIFACTORY_URL', defaultValue: 'defaultURL', description: 'Artifactory URL')
+        string(name: 'ARTIFACTORY_REPO', defaultValue: 'defaultRepo', description: 'Artifactory Repository')
+        string(name: 'ARTIFACTORY_USER', defaultValue: 'defaultUser', description: 'Artifactory User')
+        string(name: 'ARTIFACTORY_PASSWORD', defaultValue: 'defaultPassword', description: 'Artifactory Password')
+    }
+
     stages {
         stage('Read Properties') {
             steps {
                 script {
-                    // Read properties from gradle.properties file
-                    def props = readFile('gradle.properties').trim()
+                    // Print the parameters to verify they're being passed correctly
+                    echo "ARTIFACTORY_URL: ${params.ARTIFACTORY_URL}"
+                    echo "ARTIFACTORY_REPO: ${params.ARTIFACTORY_REPO}"
+                    echo "ARTIFACTORY_USER: ${params.ARTIFACTORY_USER}"
+                    echo "ARTIFACTORY_PASSWORD: ${params.ARTIFACTORY_PASSWORD}"
 
-                    // Initialize a map to hold properties
-                    def propertiesMap = [:]
-
-                    // Split properties into key-value pairs
-                    props.split('\n').each { line ->
-                        def pair = line.split('=')
-                        if (pair.length == 2) {
-                            propertiesMap[pair[0].trim()] = pair[1].trim()
-                        }
-                    }
-
-                    // Set environment variables for Gradle build
-                    env.PROPERTY1 = propertiesMap['artifactoryURL'] ?: 'defaultURL'
-                    env.PROPERTY2 = propertiesMap['artifactoryRepo'] ?: 'defaultRepo'
-
-                    env.PROPERTY3 = propertiesMap['artifactoryUser'] ?: 'defaultUser'
-                    env.PROPERTY4 = propertiesMap['artifactoryPassword'] ?: 'defaultPassword'
-
-                    // Debugging: print properties
-                    echo "PROPERTY1: ${env.PROPERTY1}"
-                    echo "PROPERTY2: ${env.PROPERTY2}"
-                      echo "PROPERTY3: ${env.PROPERTY3}"
-                    echo "PROPERTY4: ${env.PROPERTY4}"
+                    // Optionally, you can also set them as environment variables
+                    env.PROPERTY1 = params.ARTIFACTORY_URL
+                    env.PROPERTY2 = params.ARTIFACTORY_REPO
+                    env.PROPERTY3 = params.ARTIFACTORY_USER
+                    env.PROPERTY4 = params.ARTIFACTORY_PASSWORD
                 }
             }
         }
@@ -38,8 +30,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Pass the properties as parameters to the Gradle build
-                    sh "./gradlew build -PartifactoryURL=${env.PROPERTY1} -PartifactoryRepo=${env.PROPERTY2}"
+                    // Pass the parameters as command-line arguments to Gradle
+                    sh "./gradlew build -PartifactoryURL=${params.ARTIFACTORY_URL} -PartifactoryRepo=${params.ARTIFACTORY_REPO}"
                 }
             }
         }
