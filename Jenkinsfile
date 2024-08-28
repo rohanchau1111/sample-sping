@@ -20,7 +20,6 @@ ARTIFACTORY_REPO = "${params.REPO_NAME}"
 
                     sh 'chmod +x gradlew'
                        sh """
-
 ./gradlew clean build artifactoryPublish \\
  -PartifactoryRepo=${ARTIFACTORY_REPO}" \\
  -PartifactoryUser=${artifactoryUser}" \\
@@ -32,12 +31,12 @@ ARTIFACTORY_REPO = "${params.REPO_NAME}"
             }
         }
 
-        stage('Upload to Artifactory') {
-            steps {
-                sh 'pwd'
-                sh 'ls -l'
-                sh './gradlew artifactoryPublish'
-            }
-        }
+        // stage('Upload to Artifactory') {
+        //     steps {
+        //         sh 'pwd'
+        //         sh 'ls -l'
+        //         sh './gradlew artifactoryPublish'
+        //     }
+        // }
     }
 }
