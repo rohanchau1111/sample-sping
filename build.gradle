@@ -134,12 +134,12 @@ from file('test')
 }
 
 artifactory {
-    contextUrl = '$artifactoryURL'
+    contextUrl = 'http://172.27.225.231:8082/artifactory'
     publish {
         repository {
-            repoKey = '$artifactoryRepo' // Ensure this matches your Artifactory repository key
-            username = '$artifactoryUser'
-            password = '$artifactoryPassword'
+            repoKey = 'gradle-dev-local' // Ensure this matches your Artifactory repository key
+            username = 'admin'
+            password = 'DevOps9@'
         }
         defaults {
           publications('mavenJava','bootJava') // Must match the publication name in the publishing block
