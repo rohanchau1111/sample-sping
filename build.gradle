@@ -76,7 +76,7 @@ publishing {
               artifact bootJar
              } 
         }
-    
+    }
 
      repositories {
          maven {
@@ -90,7 +90,7 @@ publishing {
      }
 }
 
-}
+
 artifactory {
     contextUrl = "$artifactoryURL"
     publish {
