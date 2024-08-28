@@ -35,21 +35,21 @@ dependencies {
 }
 
 
-task createZip(type: Zip) {
+// task createZip(type: Zip) {
 
-    from file('test')
-    archiveFileName.set('test.zip')
-    destinationDirectory.set(file("$buildDir/libs/"))
+//     from file('test')
+//     archiveFileName.set('test.zip')
+//     destinationDirectory.set(file("$buildDir/libs/"))
 
-  //  from "$buildDir/libs/"
-   doLast {
-   println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
-}
-   doFirst {
+//   //  from "$buildDir/libs/"
+//    doLast {
+//    println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
+// }
+//    doFirst {
 
-   println 'archiving file ....${archiveName}'
-}
-}
+//    println 'archiving file ....${archiveName}'
+// }
+// }
 
 
  publishing {
@@ -65,7 +65,7 @@ task createZip(type: Zip) {
   // }
     
         bootJava(MavenPublication) {
-           artifact("${buildDir}/libs/test.zip") {
+           artifact("${buildDir}/libs/test") {
             artifactId=test
              groupId='ch.appuio.techlab'
           classifier = ''
