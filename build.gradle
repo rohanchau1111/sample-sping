@@ -114,7 +114,7 @@ from file('test')
        version = '1.0'
        artifact("${buildDir}/libs/test") {
         classifier = ''
-        //extension = 'zip'
+        extension = 'zip'
      }
   }
     
