@@ -51,37 +51,40 @@ task createZip(type: Zip) {
 }
 }
 
-publishing  {
-    publications {
-        
-           bootJava(MavenPublication) {
-             //version = '0.1.1-SNAPSHOT'  
-              artifact("${buildDir}/libs/test") {
-                 groupId = 'ch.appuio.techlab'
-             // artifactId='application'
-             // classifier = ''
-             // extension = 'zip'
-           
-              artifact bootJar
-             } 
-        }
-    
+
+ publishing {
+   publications {
+     mavenJava(MavenPublication) {
+        artifactId ='test'
+       version = '1.0'
+       artifact("${buildDir}/libs/test") {
+        classifier = ''
+        extension = 'zip'
+     } 
+     artifact("${buildDir}/libs/test.zip") {
+      classifier = ''
+      extension = 'zip'
+   }
   }
-
-  
     
-     repositories {
-         maven {
-             url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
-             allowInsecureProtocol = true
-             credentials {
-                 username = 'admin'
-                 password = 'DevOps9@'
-            }
-        }
-     }
-}
+        bootJava(MavenPublication) {
+      artifact bootJar
+    }
+ }
 
+   repositories {
+     maven {
+        url "http://172.27.225.231:8082/artifactory/gradle-dev-local" // Replace with your Artifactory repository URL
+         allowInsecureProtocol=true
+       credentials {
+             username = "admin"
+             password = "DevOp9@"
+         }
+// //     allowInsecureProtocol = true
+   }
+ }
+
+}
 
 artifactory {
     contextUrl = "$artifactoryURL"
