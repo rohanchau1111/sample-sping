@@ -106,14 +106,18 @@ dependencies {
 
  publishing {
    publications {
-      mavenJava(MavenPublication) {
-       artifactId ='test'
-      version = '1.0'
-      artifact("${buildDir}/libs/test") {
-       classifier = ''
-       //extension = 'zip'
+ //      mavenJava(MavenPublication) {
+ //       artifactId ='test'
+ //      version = '1.0'
+ //      artifact("${buildDir}/libs/test") {
+ //       classifier = ''
+ //       //extension = 'zip'
+ //    }
+ // }
+    
+        bootJava(MavenPublication) {
+      artifact bootJar
     }
- }
  }
 
    repositories {
@@ -139,8 +143,8 @@ artifactory {
             password = '$artifactoryPassword'
         }
         defaults {
-          publications('mavenJava') // Must match the publication name in the publishing block
-        //  publications('bootJava')
+        //  publications('mavenJava') // Must match the publication name in the publishing block
+         publications('bootJava')
          publishArtifacts = true
         }
     }
