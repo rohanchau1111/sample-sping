@@ -6,6 +6,7 @@ parameters{
 	environment {
 
     user =credentials('artifactorycreds')
+     repourl= credentials('repourl')
 	}
     stages {
 
@@ -18,7 +19,10 @@ parameters{
                    sh '''
                         chmod +x gradlew
                         echo '${user}'
-                        ./gradlew clean build -PrepoName=${params.REPO_NAME} 
+                        ./gradlew clean build 
+			-Prepourl=${repourl} 
+   	                -Prepouser=${user} 
+    	                
                     '''
                  
                     
