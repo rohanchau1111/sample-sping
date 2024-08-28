@@ -18,35 +18,37 @@ pipeline {
         stage('Read Properties') {
             steps {
                 script {
-                    // Print the parameters to verify they're being passed correctly
-                    echo "ARTIFACTORY_URL: ${params.ARTIFACTORY_URL}"
-                    echo "ARTIFACTORY_REPO: ${params.ARTIFACTORY_REPO}"
-                    echo "ARTIFACTORY_USER: ${params.ARTIFACTORY_USER}"
-                    echo "ARTIFACTORY_PASSWORD: ${params.ARTIFACTORY_PASSWORD}"
+                    def props = readProperties  file:'rest-api/gradle.properties'
+                   env.ARTIFACTORY_USER = props['artifactoryUser']
+                      echo "ARTIFACTORY_URL : ${env.ARTIFACTORY_USER}" 
+                //    echo "ARTIFACTORY_URL: ${params.ARTIFACTORY_URL}"
+                  //  echo "ARTIFACTORY_REPO: ${params.ARTIFACTORY_REPO}"
+                    //echo "ARTIFACTORY_USER: ${params.ARTIFACTORY_USER}"
+                    //echo "ARTIFACTORY_PASSWORD: ${params.ARTIFACTORY_PASSWORD}"
 
                  
                 }
             }
         }
 
-        stage('Build') {
-            steps {
-                script {
-                    // Pass the parameters as command-line arguments to Gradle
-                   sh '''
-                        chmod +x gradlew
-                        ./gradlew clean build \
-                        -PartifactoryURL=${ARTIFACTORY_URL} \
-                        -PartifactoryRepo=${ARTIFACTORY_REPO} \
-                        -PartifactoryUser=${ARTIFACTORY_USER} \
-                        -PartifactoryPassword=${ARTIFACTORY_PASSWORD} 
+        // stage('Build') {
+        //     steps {
+        //         script {
+        //             // Pass the parameters as command-line arguments to Gradle
+        //            sh '''
+        //                 chmod +x gradlew
+        //                 ./gradlew clean build \
+        //                 -PartifactoryURL=${ARTIFACTORY_URL} \
+        //                 -PartifactoryRepo=${ARTIFACTORY_REPO} \
+        //                 -PartifactoryUser=${ARTIFACTORY_USER} \
+        //                 -PartifactoryPassword=${ARTIFACTORY_PASSWORD} 
                     
-                    '''
+        //             '''
                  
                     
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
       
         stage('Upload to Artifactory') {
              steps {
