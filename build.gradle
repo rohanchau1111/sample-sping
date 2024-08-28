@@ -98,7 +98,7 @@ artifactory {
             password = "$artifactoryPassword"
         }
         defaults {
-          publications('mavenJava','bootJava') // Must match the publication name in the publishing block
+       //   publications('mavenJava','bootJava') // Must match the publication name in the publishing block
          publications('bootJava')
          publishArtifacts = true
         }
