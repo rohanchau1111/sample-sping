@@ -1,9 +1,9 @@
- plugins {
+plugins {
     id 'java'
     id 'maven-publish'
-    id 'com.jfrog.artifactory' version '5.1.12' // Artifactory plugin for Gradle
-    id 'org.springframework.boot' version '3.3.2' // Optional, if using Spring Boot
-    id 'io.spring.dependency-management' version '1.1.6' // Optional, if using Spring Boot
+    id 'com.jfrog.artifactory' version '5.1.12'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'ch.appuio.techlab'
@@ -13,7 +13,6 @@ targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
-    // Add other repositories if needed
 }
 
 dependencies {
@@ -36,86 +35,23 @@ dependencies {
 
 publishing {
     publications {
-        // mavenJava(MavenPublication) {
-        //     from components.java
-        //    groupId = 'ch.appuio.techlab'
-        //     artifactId = 'artifactorytest'
-        //     version = "0.1.1-SNAPSHOT"
-        // }    
-         // bootJava(MavenPublication) {
-         //    version = "${version}-SNAPSHOT"
-            
-         //    from components.java
-         //    artifact tasks.named("bootJar")
-         // }
-
         bootJava(MavenPublication) {
-      artifact bootJar
-    }
-            
+            artifact bootJar
         }
-    
-
-    // repositories {
-    //     maven {
-    //         url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
-    //         allowInsecureProtocol = true
-    //         credentials {
-    //             username = 'admin'
-    //             password = 'DevOps9@'
-    //         }
-    //     }
-    // }
+    }
 }
-
 
 artifactory {
     contextUrl = "$artifactoryURL"
     publish {
         repository {
-            repoKey = "$artifactoryRepo" // Ensure this matches your Artifactory repository key
+            repoKey = "$artifactoryRepo"
             username = "$artifactoryUser"
             password = "$artifactoryPassword"
         }
         defaults {
-        //  publications('mavenJava') // Must match the publication name in the publishing block
-         publications('bootJava')
-         publishArtifacts = true
+            publications('bootJava')
+            publishArtifacts = true
         }
     }
 }
-
-
-// artifactory {
-//     contextUrl = 'http://172.27.225.231:8082/artifactory'
-//     publish {
-//         repository {
-//             repoKey = 'gradle-dev-local' // Ensure this matches your Artifactory repository key
-//             username = 'admin'
-//             password = 'DevOps9@'
-//         }
-//         defaults {
-//          //   publications('mavenJava') // Must match the publication name in the publishing block
-//           publications('bootJava')
-//          publishArtifacts = true
-//         }
-//     }
-// }
-
-// task deleteUnwantedFiles(type: Delete) {
-//  doFirst{
-  
-//     delete fileTree('build/libs') {
-//        // include '**/*.jar'
-//         include '**/*-plain.jar'
-//     }
-// }
-// }
-
-task sample {
-  println "Helloworld"
-}
-// tasks.named('publish').configure {
-//     dependsOn deleteUnwantedFiles
-// }
-
