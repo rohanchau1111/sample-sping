@@ -4,11 +4,10 @@ pipeline {
     parameters {
   
         choice(name: 'REPO_NAME', choices: ['gradle-dev-local'], description: 'Select the Artifactory Repository')
-        credentials(name: 'ARTIFACTORY_CREDS',required: true, description: 'Artifactory Credentials')
     }
 
     environment {
-        // Environment variables for repository and credentials
+        ARTIFACTORY_CREDS = credentials('articred')
         ARTIFACTORY_REPO = "${params.REPO_NAME}"
     }
 
