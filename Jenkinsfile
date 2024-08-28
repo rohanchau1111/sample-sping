@@ -1,6 +1,8 @@
 pipeline {
     agent any
+environment {
 
+    user =credentials('artifactorycreds')
     stages {
 
 
@@ -10,7 +12,8 @@ pipeline {
                 
                    sh '''
                         chmod +x gradlew
-                        ./gradlew clean build 
+                        echo '${user}'
+                        ./gradlew clean build -Partifactorycreds=${user} 
                     '''
                  
                     
