@@ -1,54 +1,56 @@
 pipeline {
-    agent any
-
+  agent { label "${params.AGENT_LABEL}" }
+ 
     parameters {
-        string(name: 'ARTIFACTORY_URL', defaultValue: 'defaultURL', description: 'Artifactory URL')
-        string(name: 'ARTIFACTORY_REPO', defaultValue: 'defaultRepo', description: 'Artifactory Repository')
-        string(name: 'ARTIFACTORY_USER', defaultValue: 'defaultUser', description: 'Artifactory User')
-        string(name: 'ARTIFACTORY_PASSWORD', defaultValue: 'defaultPassword', description: 'Artifactory Password')
+        string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
+     //   string(name: 'BRANCH_NAME', defaultValue: 'feature/identity_liberty_test', description: 'Branch name to checkout')
+       // string(name: 'REPOSITORY_NAME', defaultValue: 'identity-service', description: 'Repository name')
+        //string(name: 'PROJECT_NAME', defaultValue: 'PEM', description: 'Project name')
+      
+        string(name: 'ARTIFACTORY_URL', defaultValue: '', description: 'Artifactory URL')
+        string(name: 'ARTIFACTORY_REPO', defaultValue: '', description: 'Artifactory Repository')
+        string(name: 'ARTIFACTORY_USER', defaultValue: '', description: 'Artifactory User')
+        string(name: 'ARTIFACTORY_PASSWORD', defaultValue: '', description: 'Artifactory Password')
+       string(name: 'BRANCH_ID', defaultValue: '', description: 'branchId')
     }
-
+ 
     stages {
-        stage('Read Properties') {
-            steps {
-                script {
-                    // Print the parameters to verify they're being passed correctly
+   
+        stage('build and clean')
+        {
+            steps{
+              script{
+       
                     echo "ARTIFACTORY_URL: ${params.ARTIFACTORY_URL}"
                     echo "ARTIFACTORY_REPO: ${params.ARTIFACTORY_REPO}"
                     echo "ARTIFACTORY_USER: ${params.ARTIFACTORY_USER}"
                     echo "ARTIFACTORY_PASSWORD: ${params.ARTIFACTORY_PASSWORD}"
-
-                    // Optionally, you can also set them as environment variables
-                    env.PROPERTY1 = params.ARTIFACTORY_URL
-                    env.PROPERTY2 = params.ARTIFACTORY_REPO
-                    env.PROPERTY3 = params.ARTIFACTORY_USER
-                    env.PROPERTY4 = params.ARTIFACTORY_PASSWORD
-                }
+                    echo "BRANCH_ID: ${params.BRANCH_ID}"
+ 
+                
+             
+                 sh '''
+                    chmod +x gradlew \
+                    ./gradlew clean build \
+                     -PartifactoryURL=${params.ARTIFACTORY_URL}  \
+                     -PartifactoryRepo=${params.ARTIFACTORY_REPO} \
+                     -PartifactoryUser=${params.ARTIFACTORY_USER} \ 
+                     -PartifactoryPassword=${params.ARTIFACTORY_PASSWORD} \
+                     -PbranchId=${params.BRANCH_ID}
+      
+                '''
+              }
+                 
             }
         }
-
-        stage('Build') {
-            steps {
-                script {
-                    // Pass the parameters as command-line arguments to Gradle
-                    sh "./gradlew build -PartifactoryURL=${params.ARTIFACTORY_URL} -PartifactoryRepo=${params.ARTIFACTORY_REPO}"
-                }
-            }
-        }
-
-        stage('Upload to Artifactory') {
-            steps {
-                sh 'pwd'
-                sh 'cd build/libs/'
-                sh 'ls -l'
+         stage('upload to artifactory')
+         {
+             steps{
+                 sh 'pwd'
+              //  sh 'cd $buildDir/filteredwars '
                 sh './gradlew artifactoryPublish'
-            }
-        }
-    }
-
-    post {
-        always {
-            cleanWs()
-        }
+             }
+         }
+ 
     }
 }
