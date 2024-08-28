@@ -54,11 +54,11 @@ task createZip(type: Zip) {
 publishing {
     publications {
              mavenJava(MavenPublication) {
-       artifactId ='test'
-      version = '1.0'
-      artifact("${buildDir}/libs/test.zip") {
-       classifier = ''
-       extension = 'zip'
+             group = 'ch.appuio.techlab'
+             version = '0.1.1-SNAPSHOT'
+              artifact("${buildDir}/libs/test.zip") {
+              classifier = ''
+             extension = 'zip'
     }
  }
 
