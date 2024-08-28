@@ -5,7 +5,7 @@ pipeline {
         
     }
 environment {
- 
+ARTIFACTORY_CREDS = credentials('articred') 
 ARTIFACTORY_REPO = "${params.REPO_NAME}"
 }
 
@@ -13,9 +13,10 @@ ARTIFACTORY_REPO = "${params.REPO_NAME}"
         stage('Build') {
             steps {
                 script {
-              def artifactoryCreds= credentials('articred')
-                   def artifactoryUser = artifactoryCreds.username
-                   def artifactoryPassword = artifactoryCreds.password
+              
+                   def artifactoryUser = ARTIFACTORY_CREDS_USR
+                    
+                   def artifactoryPassword =  ARTIFACTORY_CREDS_PSW
 
                     sh 'chmod +x gradlew'
                        sh """
