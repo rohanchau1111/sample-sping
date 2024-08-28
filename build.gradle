@@ -54,18 +54,15 @@ task createZip(type: Zip) {
 
  publishing {
    publications {
-     mavenJava(MavenPublication) {
-        artifactId ='test'
-       version = '1.0'
-       artifact("${buildDir}/libs/test") {
-        classifier = ''
-        extension = 'zip'
-     } 
-     artifact("${buildDir}/libs/test.zip") {
-      classifier = ''
-      extension = 'zip'
-   }
-  }
+  //    mavenJava(MavenPublication) {
+  //       artifactId ='test'
+  //       version = '1.0'
+     
+  //    artifact("${buildDir}/libs/test.zip") {
+  //     classifier = ''
+  //     extension = 'zip'
+  //  }
+  // }
     
         bootJava(MavenPublication) {
       artifact bootJar
@@ -96,7 +93,7 @@ artifactory {
         }
         defaults {
           publications('mavenJava','bootJava') // Must match the publication name in the publishing block
-        // publications('bootJava')
+         publications('bootJava')
          publishArtifacts = true
         }
     }
