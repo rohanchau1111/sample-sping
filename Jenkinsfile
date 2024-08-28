@@ -1,67 +1,62 @@
 pipeline {
     agent any
 
-    environment {
-        // Default values, will be overwritten by properties if available
-        ARTIFACTORY_URL = ''
-        ARTIFACTORY_REPO = ''
-        ARTIFACTORY_USER = ''
-        ARTIFACTORY_PASSWORD = ''
-        BRANCH_ID = ''
-    }
+    // parameters {
+    //     string(name: 'ARTIFACTORY_URL', defaultValue: 'defaultURL', description: 'Artifactory URL')
+    //     string(name: 'ARTIFACTORY_REPO', defaultValue: 'defaultRepo', description: 'Artifactory Repository')
+    //     string(name: 'ARTIFACTORY_USER', defaultValue: 'defaultUser', description: 'Artifactory User')
+    //     string(name: 'ARTIFACTORY_PASSWORD', defaultValue: 'defaultPassword', description: 'Artifactory Password')
+    // }
 
+     environment {
+           ARTIFACTORY_URL = "${params.ARTIFACTORY_URL}"
+           ARTIFACTORY_REPO ="${params.ARTIFACTORY_REPO}"
+           ARTIFACTORY_USER ="${params.ARTIFACTORY_USER}"
+           ARTIFACTORY_PASSWORD= "${params.ARTIFACTORY_PASSWORD}"
+    } 
     stages {
         stage('Read Properties') {
             steps {
                 script {
-                    // Read the properties file
-                    def props = new Properties()
-                    def propsFile = new File("${WORKSPACE}/gradle.properties")
+                    // Print the parameters to verify they're being passed correctly
+                    echo "ARTIFACTORY_URL: ${params.ARTIFACTORY_URL}"
+                    echo "ARTIFACTORY_REPO: ${params.ARTIFACTORY_REPO}"
+                    echo "ARTIFACTORY_USER: ${params.ARTIFACTORY_USER}"
+                    echo "ARTIFACTORY_PASSWORD: ${params.ARTIFACTORY_PASSWORD}"
 
-                    if (propsFile.exists()) {
-                        propsFile.withInputStream { stream ->
-                            props.load(stream)
-                        }
-
-                        // Set environment variables from properties
-                        env.ARTIFACTORY_URL = props.getProperty('artifactURL', '')
-                        env.ARTIFACTORY_REPO = props.getProperty('artifactRepo', '')
-                        env.ARTIFACTORY_USER = props.getProperty('artifactoryUser', '')
-                        env.ARTIFACTORY_PASSWORD = props.getProperty('artifactoryPassword', '')
-                        env.BRANCH_ID = props.getProperty('branchId', '')
-                    } else {
-                        error 'gradle.properties file not found'
-                    }
+                 
                 }
             }
         }
 
-        stage('Run Gradle Build') {
+        stage('Build') {
             steps {
                 script {
-                    // Ensure the gradlew script has execution permissions
-                    sh 'chmod +x gradlew'
-
-                    // Print environment variables for debugging
-                    sh '''
-                        echo "Artifactory URL: ${ARTIFACTORY_URL}"
-                        echo "Artifactory Repo: ${ARTIFACTORY_REPO}"
-                        echo "Artifactory User: ${ARTIFACTORY_USER}"
-                        echo "Artifactory Password: ${ARTIFACTORY_PASSWORD}"
-                        echo "Branch ID: ${BRANCH_ID}"
-                    '''
-
-                    // Run Gradle build with properties
-                    sh '''
+                    // Pass the parameters as command-line arguments to Gradle
+                   sh '''
+                        chmod +x gradlew
                         ./gradlew clean build \
-                            -PartifactURL=${ARTIFACTORY_URL} \
-                            -PartifactRepo=${ARTIFACTORY_REPO} \
-                            -PartifactoryUser=${ARTIFACTORY_USER} \
-                            -PartifactoryPassword=${ARTIFACTORY_PASSWORD} \
-                            -PbranchId=${BRANCH_ID}
+                        -PartifactoryURL=${ARTIFACTORY_URL} \
+                        -PartifactoryRepo=${ARTIFACTORY_REPO} \
+                        -PartifactoryUser=${ARTIFACTORY_USER} \
+                        -PartifactoryPassword=${ARTIFACTORY_PASSWORD} 
+                    
                     '''
+                 
+                    
                 }
             }
         }
+      
+        stage('Upload to Artifactory') {
+             steps {
+                 sh 'pwd'
+                 //sh 'cd build/libs/'
+                 sh 'ls -l'
+                 sh './gradlew artifactoryPublish'
+             }
+         }
     }
+
+
 }
