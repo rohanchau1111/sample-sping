@@ -10,7 +10,6 @@ pipeline {
 
     environment {
    ARTIFACTORY_URL = "${params.ARTIFACTORY_URL}"
-        ARTIFACTORY_REPO ="${params.ARTIFACTORY_REPO}"
            ARTIFACTORY_REPO ="${params.ARTIFACTORY_REPO}"
            ARTIFACTORY_USER ="${params.ARTIFACTORY_USER}"
         ARTIFACTORY_PASSWORD= "${params.ARTIFACTORY_PASSWORD}"
