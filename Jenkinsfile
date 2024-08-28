@@ -18,11 +18,11 @@ pipeline {
                     echo "ARTIFACTORY_USER: ${params.ARTIFACTORY_USER}"
                     echo "ARTIFACTORY_PASSWORD: ${params.ARTIFACTORY_PASSWORD}"
 
-                    // Optionally, you can also set them as environment variables
-                    env.PROPERTY1 = params.ARTIFACTORY_URL
-                    env.PROPERTY2 = params.ARTIFACTORY_REPO
-                    env.PROPERTY3 = params.ARTIFACTORY_USER
-                    env.PROPERTY4 = params.ARTIFACTORY_PASSWORD
+                    // // Optionally, you can also set them as environment variables
+                    // env.PROPERTY1 = params.ARTIFACTORY_URL
+                    // env.PROPERTY2 = params.ARTIFACTORY_REPO
+                    // env.PROPERTY3 = params.ARTIFACTORY_USER
+                    // env.PROPERTY4 = params.ARTIFACTORY_PASSWORD
                 }
             }
         }
