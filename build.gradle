@@ -49,41 +49,41 @@ dependencies {
 }
 
 // Create a custom configuration that extends 'implementation' and is resolvable
-configurations {
-    resolvedImplementation {
-        canBeResolved = true
-        canBeConsumed = false
-        extendsFrom configurations.implementation
-    }
-}
+// configurations {
+//     resolvedImplementation {
+//         canBeResolved = true
+//         canBeConsumed = false
+//         extendsFrom configurations.implementation
+//     }
+// }
 
 // Task to ensure dependencies are resolved
-task ensureDependenciesResolved {
-    doLast {
-        configurations.resolvedImplementation.resolve()
-    }
-}
+// task ensureDependenciesResolved {
+//     doLast {
+//         configurations.resolvedImplementation.resolve()
+//     }
+// }
 
 // Task to print the path of the downloaded JAR file
-task printDependencyPath {
-    dependsOn ensureDependenciesResolved
-    doLast {
-        configurations.resolvedImplementation.resolvedConfiguration.resolvedArtifacts.each { artifact ->
-            if (artifact.file.name.endsWith('.jar')) {
-                println "Dependency JAR file path: ${artifact.file.absolutePath}"
-            }
-        }
-    }
-}
+// task printDependencyPath {
+//     dependsOn ensureDependenciesResolved
+//     doLast {
+//         configurations.resolvedImplementation.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+//             if (artifact.file.name.endsWith('.jar')) {
+//                 println "Dependency JAR file path: ${artifact.file.absolutePath}"
+//             }
+//         }
+//     }
+// }
 
 // Task to copy the JAR file to a specific directory
-task copyDependencies(type: Copy) {
-    dependsOn ensureDependenciesResolved
-    from {
-        configurations.resolvedImplementation.resolvedConfiguration.resolvedArtifacts.collect { it.file }
-    }
-    into "$buildDir/libs"
-}
+// task copyDependencies(type: Copy) {
+//     dependsOn ensureDependenciesResolved
+//     from {
+//         configurations.resolvedImplementation.resolvedConfiguration.resolvedArtifacts.collect { it.file }
+//     }
+//     into "$buildDir/libs"
+// }
 
 
 // task createZip(type: Zip) {
@@ -147,7 +147,7 @@ artifactory {
 }
 // Ensure the build depends on both tasks
 tasks.build {
-    dependsOn copyDependencies
-    dependsOn printDependencyPath
+   // dependsOn copyDependencies
+    //dependsOn printDependencyPath
    // dependsOn  createZip
 }
