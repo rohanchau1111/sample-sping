@@ -16,24 +16,7 @@ repositories {
     // Add other repositories if needed
 }
 
-   repositories {
-     maven {
-         url "http://172.27.225.231:8082/artifactory/gradle-dev-local" // Replace with your Artifactory repository URL
-       allowInsecureProtocol=true
-       credentials {
-             username = "admin"
-             password = "DevOp9@"
-         }
-//      allowInsecureProtocol = true
-    }
- }
 dependencies {
- // implementation 'com.example:my-jar-artifact:1.0.0' // Coordinates of the JAR file
- //   implementation 'ch.appuio.techlab:artifactorytest:0.1.1'
-   // implementation 'ch.appuio.techlab:artifactorytest:0.1.1-SNAPSHOT'
-
-
-
     compileOnly('org.springframework.boot:spring-boot-starter-validation')
     implementation('org.springframework.boot:spring-boot-starter')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
@@ -49,116 +32,80 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation('junit:junit:4.13.2')
-
 }
 
-// Create a custom configuration that extends 'implementation' and is resolvable
-// configurations {
-//     resolvedImplementation {
-//         canBeResolved = true
-//         canBeConsumed = false
-//         extendsFrom configurations.implementation
-//     }
-// }
 
-// Task to ensure dependencies are resolved
-// task ensureDependenciesResolved {
-//     doLast {
-//         configurations.resolvedImplementation.resolve()
-//     }
-// }
+task createZip(type: Zip) {
 
-// Task to print the path of the downloaded JAR file
-// task printDependencyPath {
-//     dependsOn ensureDependenciesResolved
-//     doLast {
-//         configurations.resolvedImplementation.resolvedConfiguration.resolvedArtifacts.each { artifact ->
-//             if (artifact.file.name.endsWith('.jar')) {
-//                 println "Dependency JAR file path: ${artifact.file.absolutePath}"
-//             }
-//         }
-//     }
-// }
+    from file('test')
+    archiveFileName.set('test.zip')
+    destinationDirectory.set(file("$buildDir/libs/"))
 
-// Task to copy the JAR file to a specific directory
-// task copyDependencies(type: Copy) {
-//     dependsOn ensureDependenciesResolved
-//     from {
-//         configurations.resolvedImplementation.resolvedConfiguration.resolvedArtifacts.collect { it.file }
-//     }
-//     into "$buildDir/libs"
-// }
+  //  from "$buildDir/libs/"
+   doLast {
+   println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
+}
+   doFirst {
 
+   println 'archiving file ....${archiveName}'
+}
+}
 
- task createZip(type: Zip) {
-
-from file('test')
-//    from file('/home/rohan/.jenkins/workspace/job2/src/main/resources/application.properties')
-   archiveFileName.set('test.zip')
-     destinationDirectory.set(file("$buildDir/libs/"))
-
-//   //  from "$buildDir/libs/"
- doLast {
-    println 'Zip file created at ${destinationDirectory}/${archiveFileName}' }
-  doFirst {
-
-    println 'archiving file ....${archiveName}'
- }
- }
-
-
- publishing {
-   publications {
-     mavenJava(MavenPublication) {
-        artifactId ='test'
-       version = '1.0'
-       artifact("${buildDir}/libs/test") {
-        classifier = ''
-        extension = 'zip'
-     } 
-     artifact("${buildDir}/libs/test.zip") {
-      classifier = ''
-      extension = 'zip'
-   }
-  }
-    
-        bootJava(MavenPublication) {
-      artifact bootJar
+publishing {
+    publications {
+             mavenJava(MavenPublication) {
+       artifactId ='test'
+      version = '1.0'
+      artifact("${buildDir}/libs/test.zip") {
+       classifier = ''
+       extension = 'zip'
     }
  }
 
-   repositories {
-     maven {
-        url "http://172.27.225.231:8082/artifactory/gradle-dev-local" // Replace with your Artifactory repository URL
-         allowInsecureProtocol=true
-       credentials {
-             username = "admin"
-             password = "DevOp9@"
-         }
-// //     allowInsecureProtocol = true
-   }
- }
+        bootJava(MavenPublication) {
+      artifact bootJar
+    }
+            
+        }
+    
 
+     repositories {
+         maven {
+             url = uri('http://172.27.225.231:8082/artifactory/gradle-dev-local/')
+             allowInsecureProtocol = true
+             credentials {
+                 username = 'admin'
+                 password = 'DevOps9@'
+            }
+        }
+     }
 }
 
+
 artifactory {
-    contextUrl = 'http://172.27.225.231:8082/artifactory'
+    contextUrl = "$artifactoryURL"
     publish {
         repository {
-            repoKey = 'gradle-dev-local' // Ensure this matches your Artifactory repository key
-            username = 'admin'
-            password = 'DevOps9@'
+            repoKey = "$artifactoryRepo" // Ensure this matches your Artifactory repository key
+            username = "$artifactoryUser"
+            password = "$artifactoryPassword"
         }
         defaults {
-          publications('mavenJava','bootJava') // Must match the publication name in the publishing block
-       //  publications('bootJava')
+        //  publications('mavenJava') // Must match the publication name in the publishing block
+         publications('bootJava')
          publishArtifacts = true
         }
     }
 }
-// Ensure the build depends on both tasks
+
+
 tasks.build {
-   // dependsOn copyDependencies
-    //dependsOn printDependencyPath
     dependsOn  createZip
 }
+task sample {
+  println "Helloworld"
+}
+// tasks.named('publish').configure {
+//     dependsOn deleteUnwantedFiles
+// }
+
