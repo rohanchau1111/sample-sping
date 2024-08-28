@@ -40,11 +40,11 @@ pipeline {
                    sh '''
                         chmod +x gradlew
                         ./gradlew clean build \
-                        -PartifactoryURL=${params.ARTIFACTORY_URL} \
-                        -PartifactoryRepo=${params.ARTIFACTORY_REPO} \
-                        -PartifactoryUser=${params.ARTIFACTORY_USER} \
-                        -PartifactoryPassword=${params.ARTIFACTORY_PASSWORD} \
-                        -PbranchId=${params.BRANCH_ID}
+                        -PartifactoryURL=${ARTIFACTORY_URL} \
+                        -PartifactoryRepo=${ARTIFACTORY_REPO} \
+                        -PartifactoryUser=${ARTIFACTORY_USER} \
+                        -PartifactoryPassword=${ARTIFACTORY_PASSWORD} 
+                    
                     '''
                  
                     
