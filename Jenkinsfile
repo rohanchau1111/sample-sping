@@ -52,7 +52,7 @@ pipeline {
         stage('Upload to Artifactory') {
              steps {
                  sh 'pwd'
-                 sh 'cd build/libs/'
+                 //sh 'cd build/libs/'
                  sh 'ls -l'
                  sh './gradlew artifactoryPublish'
              }
