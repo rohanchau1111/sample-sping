@@ -1,8 +1,8 @@
 pipeline {
-    agent { label "${params.AGENT_LABEL}" }
+    agent any
 
     parameters {
-        string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
+  
         choice(name: 'REPO_NAME', choices: ['gradle-dev-local'], description: 'Select the Artifactory Repository')
         credentials(name: 'ARTIFACTORY_CREDS',required: true, description: 'Artifactory Credentials')
     }
