@@ -38,10 +38,10 @@ pipeline {
                 script {
                     // Pass the parameters as command-line arguments to Gradle
                     sh '''
-                    ./gradlew build
-                    -PartifactoryURL=${ARTIFACTORY_URL} 
-                    -PartifactoryRepo=${ARTIFACTORY_REPO}
-                          -PartifactoryUser=${ARTIFACTORY_USER}
+                    ./gradlew build \
+                    -PartifactoryURL=${ARTIFACTORY_URL} \
+                    -PartifactoryRepo=${ARTIFACTORY_REPO} \
+                          -PartifactoryUser=${ARTIFACTORY_USER} \
                                 -PartifactoryPassword=${ARTIFACTORY_PASSWORD}
                     '''
                 }
