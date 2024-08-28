@@ -1,7 +1,10 @@
 pipeline {
     agent any
-environment {
+parameters{
   choice(name: 'REPO_NAME', choices: ['gradle-dev-local', 'repo2', 'repo3'], description: 'Select the repository to build')
+}
+	environment {
+
     user =credentials('artifactorycreds')
 	}
     stages {
