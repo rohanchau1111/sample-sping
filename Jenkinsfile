@@ -30,7 +30,7 @@ pipeline {
                         -PartifactoryRepo=${ARTIFACTORY_REPO} \\
                         -PartifactoryUser=${ARTIFACTORY_CREDS_USR} \\
                         -PartifactoryPassword=${ARTIFACTORY_CREDS_PSW} \\
-                        -PbranchId=${BRANCH_ID}
+                        -PbranchId=${branchId}
                     """
                 }
             }
