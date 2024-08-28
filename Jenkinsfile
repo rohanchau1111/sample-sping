@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     environment {
         ARTIFACTORY_URL = ''
         ARTIFACTORY_REPO = ''
@@ -8,16 +8,17 @@ pipeline {
         ARTIFACTORY_PASSWORD = ''
         BRANCH_ID = ''
     }
-    
+
     stages {
         stage('Read Properties') {
             steps {
                 script {
                     // Read the properties file using Groovy
                     def props = new Properties()
-                    file = new File('gradle.properties')
-                    if (file.exists()) {
-                        file.withInputStream { stream ->
+                    def propsFile = new File('gradle.properties')
+
+                    if (propsFile.exists()) {
+                        propsFile.withInputStream { stream ->
                             props.load(stream)
                         }
                         
@@ -37,7 +38,7 @@ pipeline {
         stage('Run Gradle Build') {
             steps {
                 script {
-                    // Pass the properties as command-line arguments to Gradle
+                    // Run Gradle build with environment variables
                     sh '''
                         chmod +x gradlew
                         echo '---'
