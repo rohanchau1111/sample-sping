@@ -42,20 +42,21 @@ pipeline {
                     -PartifactoryURL=${ARTIFACTORY_URL} \
                     -PartifactoryRepo=${ARTIFACTORY_REPO} \
                           -PartifactoryUser=${ARTIFACTORY_USER} \
-                                -PartifactoryPassword=${ARTIFACTORY_PASSWORD}
+                                -PartifactoryPassword=${ARTIFACTORY_PASSWORD} \
+                    ./gradlew artifactoryPublish
                     '''
                 }
             }
         }
 
-        stage('Upload to Artifactory') {
-            steps {
-                sh 'pwd'
-                sh 'cd build/libs/'
-                sh 'ls -l'
-                sh './gradlew artifactoryPublish'
-            }
-        }
+        // stage('Upload to Artifactory') {
+        //     steps {
+        //         sh 'pwd'
+        //         sh 'cd build/libs/'
+        //         sh 'ls -l'
+        //         sh './gradlew artifactoryPublish'
+        //     }
+        // }
     }
 
     post {
