@@ -90,7 +90,7 @@ publishing {
      }
 }
 
-
+}
 artifactory {
     contextUrl = "$artifactoryURL"
     publish {
