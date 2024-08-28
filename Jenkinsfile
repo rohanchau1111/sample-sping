@@ -1,42 +1,30 @@
 pipeline {
-    agent any
+    agent { label "${params.AGENT_LABEL}" }
+
     parameters {
-         choice(name: 'REPO_NAME', choices: ['gradle-dev-local'])
-        
+        string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
+        choice(name: 'REPO_NAME', choices: ['gradle-dev-local'], description: 'Select the Artifactory Repository')
+        credentials(name: 'ARTIFACTORY_CREDS', type: 'username-password', required: true, description: 'Artifactory Credentials')
     }
-environment {
-ARTIFACTORY_CREDS = credentials('articred') 
-ARTIFACTORY_REPO = "${params.REPO_NAME}"
-}
+
+    environment {
+        // Environment variables for repository and credentials
+        ARTIFACTORY_REPO = "${params.REPO_NAME}"
+    }
 
     stages {
-        stage('Build') {
+        stage('Build and Clean') {
             steps {
                 script {
-              
-                   def artifactoryUser = ARTIFACTORY_CREDS_USR
-                    
-                   def artifactoryPassword =  ARTIFACTORY_CREDS_PSW
-
-                    sh 'chmod +x gradlew'
-                       sh """
-./gradlew clean build artifactoryPublish \\
- -PartifactoryRepo=${ARTIFACTORY_REPO}" \\
- -PartifactoryUser=${artifactoryUser}" \\
--PartifactoryPassword=${artifactoryPassword}"
- 
-   """       
-            
+                    // Pass the credentials and repository name to the Gradle build
+                    sh """
+                        ./gradlew clean build artifactoryPublish \\
+                        -PartifactoryRepo=${ARTIFACTORY_REPO} \\
+                        -PartifactoryUser=${ARTIFACTORY_CREDS_USR} \\
+                        -PartifactoryPassword=${ARTIFACTORY_CREDS_PSW}
+                    """
                 }
             }
         }
-
-        // stage('Upload to Artifactory') {
-        //     steps {
-        //         sh 'pwd'
-        //         sh 'ls -l'
-        //         sh './gradlew artifactoryPublish'
-        //     }
-        // }
     }
 }
