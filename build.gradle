@@ -86,34 +86,33 @@ dependencies {
 // }
 
 
-// task createZip(type: Zip) {
+ task createZip(type: Zip) {
 
-//     //from file('test')
+from file('test')
 //    from file('/home/rohan/.jenkins/workspace/job2/src/main/resources/application.properties')
-//     archiveFileName.set('test.zip')
-//     destinationDirectory.set(file("$buildDir/libs/"))
+   archiveFileName.set('test.zip')
+     destinationDirectory.set(file("$buildDir/libs/"))
 
 //   //  from "$buildDir/libs/"
-//    doLast {
-//    println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
-// }
-//    doFirst {
+ doLast {
+    println 'Zip file created at ${destinationDirectory}/${archiveFileName}' }
+  doFirst {
 
-//    println 'archiving file ....${archiveName}'
-// }
-// }
+    println 'archiving file ....${archiveName}'
+ }
+ }
 
 
  publishing {
    publications {
- //      mavenJava(MavenPublication) {
- //       artifactId ='test'
- //      version = '1.0'
- //      artifact("${buildDir}/libs/test") {
- //       classifier = ''
- //       //extension = 'zip'
- //    }
- // }
+     mavenJava(MavenPublication) {
+        artifactId ='test'
+       version = '1.0'
+       artifact("${buildDir}/libs/test") {
+        classifier = ''
+        //extension = 'zip'
+     }
+  }
     
         bootJava(MavenPublication) {
       artifact bootJar
@@ -143,8 +142,8 @@ artifactory {
             password = '$artifactoryPassword'
         }
         defaults {
-        //  publications('mavenJava') // Must match the publication name in the publishing block
-         publications('bootJava')
+          publications('mavenJava','bootJava') // Must match the publication name in the publishing block
+       //  publications('bootJava')
          publishArtifacts = true
         }
     }
@@ -153,5 +152,5 @@ artifactory {
 tasks.build {
    // dependsOn copyDependencies
     //dependsOn printDependencyPath
-   // dependsOn  createZip
+    dependsOn  createZip
 }
