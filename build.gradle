@@ -53,15 +53,15 @@ task createZip(type: Zip) {
 
 publishing  {
     publications {
-           //   mavenJava(MavenPublication) {
-//              groupId = 'ch.appuio.techlab'
-            //  artifactId='application'
+              mavenJava(MavenPublication) {
+             groupId = 'ch.appuio.techlab'
+           artifactId='application'
              
-             //  artifact("${buildDir}/libs/test.zip") {
-             //  classifier = ''
-              //extension = 'zip'
-  //   }
-
+             artifact("${buildDir}/libs/test.zip") {
+              classifier = ''
+             extension = 'zip'
+   }
+              }
            bootJava(MavenPublication) {
              //version = '0.1.1-SNAPSHOT'  
               artifact("${buildDir}/libs/test") {
