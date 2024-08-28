@@ -1,28 +1,30 @@
 pipeline {
     agent any
     parameters {
-        choice(name: 'REPO_NAME', choices: ['gradle-dev-local', 'repo2', 'repo3'], description: 'Select the repository to build')
+      
+         choice(name: 'REPO_NAME', choices: ['gradle-dev-local'])
     }
-    environment {
-        ARTIFACTORY_CREDS = credentials('artifactorycreds')  // Combined username and password
-        REPO_URL = credentials('repourl')  // Assuming repourl is stored as a secret text in Jenkins
-    }
+environment {
+  ARTIFACTORY_CREDS = credentials('articred')
+ ARTIFACTORY_USER =  "${ARTIFACTORY_CREDS_USR}"
+ARTIFACTORY_PASSWORD = "${ARTIFACTORY_CREDS_PSW}"
+ARTIFACTORY_REPO = "${params.REPO_NAME}"
+}
     stages {
         stage('Build') {
             steps {
                 script {
-                    // Extract username and password from combined credentials
-                    def (username, password) = ARTIFACTORY_CREDS.split(':', 2)
-                    def repoName = params.REPO_NAME
+                  sh 'chmod +x gradlew'
+                       sh """
+
+./gradlew clean build artifactoryPublish \\
+ -PartifactoryRepo=${ARTIFACTORY_REPO}" \\
+ -PartifactoryUser=${ARTIFACTORY_USER}" \\
+-PartifactoryPassword=${ARTIFACTORY_PASSWORD}"
+ 
+   """    
                     
-                    sh """
-                        chmod +x gradlew
-                        ./gradlew clean build \
-                        -PartifactoryUrl=${REPO_URL} \
-                        -PartifactoryUser=${username} \
-                        -PartifactoryPassword=${password} \
-                        -PartifactoryRepo=${repoName}
-                    """
+            
                 }
             }
         }
