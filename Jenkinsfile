@@ -8,6 +8,13 @@ pipeline {
         string(name: 'ARTIFACTORY_PASSWORD', defaultValue: 'defaultPassword', description: 'Artifactory Password')
     }
 
+    environment {
+   ARTIFACTORY_URL = "${params.ARTIFACTORY_URL}"
+        ARTIFACTORY_REPO ="${params.ARTIFACTORY_REPO}"
+           ARTIFACTORY_REPO ="${params.ARTIFACTORY_REPO}"
+           ARTIFACTORY_USER ="${params.ARTIFACTORY_USER}"
+        ARTIFACTORY_PASSWORD= "${params.ARTIFACTORY_PASSWORD}"
+    }
     stages {
         stage('Read Properties') {
             steps {
@@ -33,10 +40,10 @@ pipeline {
                     // Pass the parameters as command-line arguments to Gradle
                     sh '''
                     ./gradlew build
-                    -PartifactoryURL=${params.ARTIFACTORY_URL} 
-                    -PartifactoryRepo=${params.ARTIFACTORY_REPO}
-                          -PartifactoryUser=${params.ARTIFACTORY_USER}
-                                -PartifactoryPassword=${params.ARTIFACTORY_PASSWORD}
+                    -PartifactoryURL=${ARTIFACTORY_URL} 
+                    -PartifactoryRepo=${ARTIFACTORY_REPO}
+                          -PartifactoryUser=${ARTIFACTORY_USER}
+                                -PartifactoryPassword=${ARTIFACTORY_PASSWORD}
                     '''
                 }
             }
