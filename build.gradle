@@ -115,7 +115,11 @@ from file('test')
        artifact("${buildDir}/libs/test") {
         classifier = ''
         extension = 'zip'
-     }
+     } 
+     artifact("${buildDir}/libs/test.zip") {
+      classifier = ''
+      extension = 'zip'
+   }
   }
     
         bootJava(MavenPublication) {
