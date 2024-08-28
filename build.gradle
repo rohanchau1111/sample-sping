@@ -6,6 +6,10 @@
     id 'io.spring.dependency-management' version '1.1.6' // Optional, if using Spring Boot
 }
 
+group = 'ch.appuio.techlab'
+version = '0.1.1-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
