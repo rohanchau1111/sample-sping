@@ -6,25 +6,26 @@ pipeline {
     }
 environment {
  
-  ARTIFACTORY_CREDS = credentials('articred')
- ARTIFACTORY_USER =  "${ARTIFACTORY_CREDS_USR}"
-ARTIFACTORY_PASSWORD = "${ARTIFACTORY_CREDS_PSW}"
 ARTIFACTORY_REPO = "${params.REPO_NAME}"
 }
+
     stages {
         stage('Build') {
             steps {
                 script {
-                  sh 'chmod +x gradlew'
+              def artifactoryCreds= credentials('articred')
+                   def artifactoryUser = artifactoryCreds.username
+                   def artifactoryPassword = artifactoryCreds.password
+
+                    sh 'chmod +x gradlew'
                        sh """
 
 ./gradlew clean build artifactoryPublish \\
  -PartifactoryRepo=${ARTIFACTORY_REPO}" \\
- -PartifactoryUser=${ARTIFACTORY_USER}" \\
--PartifactoryPassword=${ARTIFACTORY_PASSWORD}"
+ -PartifactoryUser=${artifactoryUser}" \\
+-PartifactoryPassword=${artifactoryPassword}"
  
-   """    
-                    
+   """       
             
                 }
             }
