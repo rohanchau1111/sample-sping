@@ -14,8 +14,9 @@ pipeline {
         stage('Read Properties') {
             steps {
                 script {
+                    // Read the properties file
                     def props = new Properties()
-                    def propsFile = new File("${JENKINS_HOME}/workspace/${JOB_NAME}/gradle.properties")
+                    def propsFile = new File("${WORKSPACE}/gradle.properties")
 
                     if (propsFile.exists()) {
                         propsFile.withInputStream { stream ->
@@ -40,7 +41,7 @@ pipeline {
                 script {
                     // Ensure the gradlew script has execution permissions
                     sh 'chmod +x gradlew'
-                    
+
                     // Print environment variables for debugging
                     sh '''
                         echo "Artifactory URL: ${ARTIFACTORY_URL}"
@@ -49,8 +50,8 @@ pipeline {
                         echo "Artifactory Password: ${ARTIFACTORY_PASSWORD}"
                         echo "Branch ID: ${BRANCH_ID}"
                     '''
-                    
-                    // Run Gradle build with environment variables
+
+                    // Run Gradle build with properties
                     sh '''
                         ./gradlew clean build \
                             -PartifactURL=${ARTIFACTORY_URL} \
