@@ -13,15 +13,23 @@ pipeline {
         stage('Read Properties') {
             steps {
                 script {
-                    // Read the properties file
-                    def props = readProperties file: 'gradle.properties'
-                    
-                    // Set environment variables from properties
-                    env.ARTIFACTORY_URL = props.artifactURL
-                    env.ARTIFACTORY_REPO = props.artifactRepo
-                    env.ARTIFACTORY_USER = props.artifactoryUser
-                    env.ARTIFACTORY_PASSWORD = props.artifactoryPassword
-                    env.BRANCH_ID = props.branchId
+                    // Read the properties file using Groovy
+                    def props = new Properties()
+                    file = new File('gradle.properties')
+                    if (file.exists()) {
+                        file.withInputStream { stream ->
+                            props.load(stream)
+                        }
+                        
+                        // Set environment variables from properties
+                        env.ARTIFACTORY_URL = props.getProperty('artifactURL', '')
+                        env.ARTIFACTORY_REPO = props.getProperty('artifactRepo', '')
+                        env.ARTIFACTORY_USER = props.getProperty('artifactoryUser', '')
+                        env.ARTIFACTORY_PASSWORD = props.getProperty('artifactoryPassword', '')
+                        env.BRANCH_ID = props.getProperty('branchId', '')
+                    } else {
+                        error 'gradle.properties file not found'
+                    }
                 }
             }
         }
