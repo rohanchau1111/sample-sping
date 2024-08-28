@@ -65,11 +65,17 @@ dependencies {
   // }
     
         bootJava(MavenPublication) {
+
+              artifact("${buildDir}/libs/test.zip") {
+         classifier = ''
+          extension = 'zip'
+    }
+ 
            artifact("${buildDir}/test") {
             artifactId=test
              groupId='ch.appuio.techlab'
           classifier = ''
-      //  extension = 'zip'
+     
      }
       artifact bootJar
     }
@@ -106,9 +112,9 @@ artifactory {
 }
 
 
-// tasks.build {
-//     dependsOn  createZip
-// }
+ tasks.build {
+     dependsOn  createZip
+ }
 task sample {
   println "Helloworld"
 }
