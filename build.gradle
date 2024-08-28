@@ -53,22 +53,19 @@ task createZip(type: Zip) {
 
 publishing  {
     publications {
-              mavenJava(MavenPublication) {
+           //   mavenJava(MavenPublication) {
 //              groupId = 'ch.appuio.techlab'
             //  artifactId='application'
              
-               artifact("${buildDir}/libs/test.zip") {
-               classifier = ''
-              extension = 'zip'
-     }
-  }
+             //  artifact("${buildDir}/libs/test.zip") {
+             //  classifier = ''
+              //extension = 'zip'
+  //   }
 
-        bootJava(MavenPublication) {
-             //version = '0.1.1-SNAPSHOT'
-          
-           
-             // artifact("${buildDir}/libs/test.zip") {
-             //     groupId = 'ch.appuio.techlab'
+           bootJava(MavenPublication) {
+             //version = '0.1.1-SNAPSHOT'  
+              artifact("${buildDir}/libs/test") {
+                 groupId = 'ch.appuio.techlab'
              // artifactId='application'
              // classifier = ''
              // extension = 'zip'
@@ -77,6 +74,9 @@ publishing  {
              } 
         }
     
+  }
+
+  
     
      repositories {
          maven {
@@ -108,9 +108,9 @@ artifactory {
 }
 
 
-tasks.build {
-    dependsOn  createZip
-}
+// tasks.build {
+//     dependsOn  createZip
+// }
 task sample {
   println "Helloworld"
 }
