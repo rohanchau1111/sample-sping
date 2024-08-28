@@ -35,21 +35,20 @@ dependencies {
 }
 
 
-// task createZip(type: Zip) {
+ task createZip(type: Zip) {
+    from file('test')
+     archiveFileName.set('test.zip')
+    destinationDirectory.set(file("$buildDir/libs/"))
 
-//     from file('test')
-//     archiveFileName.set('test.zip')
-//     destinationDirectory.set(file("$buildDir/libs/"))
+   //  from "$buildDir/libs/"
+    doLast {
+    println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
+ }
+    doFirst {
 
-//   //  from "$buildDir/libs/"
-//    doLast {
-//    println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
-// }
-//    doFirst {
-
-//    println 'archiving file ....${archiveName}'
-// }
-// }
+    println 'archiving file ....${archiveName}'
+ }
+ }
 
 
  publishing {
@@ -113,7 +112,7 @@ artifactory {
 
 
  tasks.build {
-     dependsOn  createZip
+     dependsOn createZip
  }
 task sample {
   println "Helloworld"
