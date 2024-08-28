@@ -31,7 +31,13 @@ pipeline {
             steps {
                 script {
                     // Pass the parameters as command-line arguments to Gradle
-                    sh "./gradlew build -PartifactoryURL=${params.ARTIFACTORY_URL} -PartifactoryRepo=${params.ARTIFACTORY_REPO}"
+                    sh '''
+                    ./gradlew build
+                    -PartifactoryURL=${params.ARTIFACTORY_URL} 
+                    -PartifactoryRepo=${params.ARTIFACTORY_REPO}
+                          -PartifactoryUser=${params.ARTIFACTORY_USER}
+                                -PartifactoryPassword=${params.ARTIFACTORY_PASSWORD}
+                    '''
                 }
             }
         }
