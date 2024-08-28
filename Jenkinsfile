@@ -8,12 +8,12 @@ pipeline {
     //     string(name: 'ARTIFACTORY_PASSWORD', defaultValue: 'defaultPassword', description: 'Artifactory Password')
     // }
 
-     environment {
-           ARTIFACTORY_URL = "${params.ARTIFACTORY_URL}"
-           ARTIFACTORY_REPO ="${params.ARTIFACTORY_REPO}"
-           ARTIFACTORY_USER ="${params.ARTIFACTORY_USER}"
-           ARTIFACTORY_PASSWORD= "${params.ARTIFACTORY_PASSWORD}"
-    } 
+    //  environment {
+    //        ARTIFACTORY_URL = "${params.ARTIFACTORY_URL}"
+    //        ARTIFACTORY_REPO ="${params.ARTIFACTORY_REPO}"
+    //        ARTIFACTORY_USER ="${params.ARTIFACTORY_USER}"
+    //        ARTIFACTORY_PASSWORD= "${params.ARTIFACTORY_PASSWORD}"
+    // } 
     stages {
         stage('Read Properties') {
             steps {
