@@ -1,12 +1,11 @@
 pipeline {
     agent any
   
-     //environment {
-     // ARTIFACTORY_SERVER_ID='abcd'
-      //ARTIFACTORY_REPO='gradle-release-loca'
-   //   ARTIFACTORY_CREDENTIALS='artifactorycreds'
-         
-     //}
+    parameters {
+       // string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
+         choice(name: 'REPO_NAME', choices: ['gradle-dev-local'])
+    }
+
      
     stages {
         stage('clone') {
@@ -30,7 +29,7 @@ pipeline {
             steps {
                 sh 'ls -la'
              //   sh 'sudo  ls -la /root/.gradle/caches/modules-2/files-2.1/ch.appuio.techlab/artifactorytest/'
-              sh 'sudo ./gradlew  build'
+              sh 'sudo ./gradlew  build artifactoryPublish  -PartifactoryRepo=${params.REPO_NAME}'
           //    sh 'sudo ./gradlew artifactoryPublish'
              //  archiveArtifacts artifacts: 'build/libs/*.jar', followSymlinks: false
             }
