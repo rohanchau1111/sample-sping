@@ -1,14 +1,14 @@
 pipeline {
     agent any
     parameters {
-      
          choice(name: 'REPO_NAME', choices: ['gradle-dev-local'])
+        
     }
 environment {
  
- ARTIFACTORY_USER =  credentials('articred').username
-    
-ARTIFACTORY_PASSWORD = credentials('articred').password
+  ARTIFACTORY_CREDS = credentials('articred')
+ ARTIFACTORY_USER =  "${ARTIFACTORY_CREDS_USR}"
+ARTIFACTORY_PASSWORD = "${ARTIFACTORY_CREDS_PSW}"
 ARTIFACTORY_REPO = "${params.REPO_NAME}"
 }
     stages {
