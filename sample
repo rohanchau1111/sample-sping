@@ -3,11 +3,7 @@ pipeline {
 
     parameters {
         string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
-        string(name: 'ARTIFACTORY_URL', defaultValue: '', description: 'Artifactory URL')
-        string(name: 'ARTIFACTORY_REPO', defaultValue: '', description: 'Artifactory Repository')
-        string(name: 'ARTIFACTORY_USER', defaultValue: '', description: 'Artifactory User')
-        string(name: 'ARTIFACTORY_PASSWORD', defaultValue: '', description: 'Artifactory Password')
-        string(name: 'BRANCH_ID', defaultValue: '', description: 'Branch ID')
+         choice(name: 'REPO_NAME', choices: ['b2bi-npm'])
     }
 
     stages {
@@ -15,30 +11,19 @@ pipeline {
         stage('Build and Clean') {
             steps {
                 script {
-                    echo "ARTIFACTORY_URL: ${params.ARTIFACTORY_URL}"
-                    echo "ARTIFACTORY_REPO: ${params.ARTIFACTORY_REPO}"
-                    echo "ARTIFACTORY_USER: ${params.ARTIFACTORY_USER}"
-                    echo "ARTIFACTORY_PASSWORD: ${params.ARTIFACTORY_PASSWORD}"
-                    echo "BRANCH_ID: ${params.BRANCH_ID}"
-
-                    sh '''
-                        chmod +x gradlew
-                        ./gradlew clean build \
-                        -PartifactoryURL=${params.ARTIFACTORY_URL} \
-                        -PartifactoryRepo=${params.ARTIFACTORY_REPO} \
-                        -PartifactoryUser=${params.ARTIFACTORY_USER} \
-                        -PartifactoryPassword=${params.ARTIFACTORY_PASSWORD} \
-                        -PbranchId=${params.BRANCH_ID}
-                    '''
+                
+                    sh 'chmod +x gradlew'
+                       sh "./gradlew clean build artifactoryPublish -PartifactoryRepo=${params.REPO_NAME}"
+              
                 }
             }
         }
 
-        stage('Upload to Artifactory') {
+     /*   stage('Upload to Artifactory') {
             steps {
                 sh 'pwd'
                 sh './gradlew artifactoryPublish'
             }
-        }
+        } */
     }
 }
