@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        // Default values, will be overwritten by properties if available
         ARTIFACTORY_URL = ''
         ARTIFACTORY_REPO = ''
         ARTIFACTORY_USER = ''
@@ -13,15 +14,14 @@ pipeline {
         stage('Read Properties') {
             steps {
                 script {
-                    // Read the properties file using Groovy
                     def props = new Properties()
-                    def propsFile = new File('gradle.properties')
+                    def propsFile = new File("${JENKINS_HOME}/workspace/${JOB_NAME}/gradle.properties")
 
                     if (propsFile.exists()) {
                         propsFile.withInputStream { stream ->
                             props.load(stream)
                         }
-                        
+
                         // Set environment variables from properties
                         env.ARTIFACTORY_URL = props.getProperty('artifactURL', '')
                         env.ARTIFACTORY_REPO = props.getProperty('artifactRepo', '')
@@ -34,22 +34,24 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Run Gradle Build') {
             steps {
                 script {
-                    // Run Gradle build with environment variables
+                    // Ensure the gradlew script has execution permissions
+                    sh 'chmod +x gradlew'
+                    
+                    // Print environment variables for debugging
                     sh '''
-                        chmod +x gradlew
-                        echo '---'
-                        # Print the properties for debugging
                         echo "Artifactory URL: ${ARTIFACTORY_URL}"
                         echo "Artifactory Repo: ${ARTIFACTORY_REPO}"
                         echo "Artifactory User: ${ARTIFACTORY_USER}"
                         echo "Artifactory Password: ${ARTIFACTORY_PASSWORD}"
                         echo "Branch ID: ${BRANCH_ID}"
-                        
-                        # Run Gradle build with properties
+                    '''
+                    
+                    // Run Gradle build with environment variables
+                    sh '''
                         ./gradlew clean build \
                             -PartifactURL=${ARTIFACTORY_URL} \
                             -PartifactRepo=${ARTIFACTORY_REPO} \
