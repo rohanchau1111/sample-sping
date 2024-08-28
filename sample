@@ -1,56 +1,44 @@
 pipeline {
-  agent { label "${params.AGENT_LABEL}" }
- 
+    agent { label "${params.AGENT_LABEL}" }
+
     parameters {
         string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
-     //   string(name: 'BRANCH_NAME', defaultValue: 'feature/identity_liberty_test', description: 'Branch name to checkout')
-       // string(name: 'REPOSITORY_NAME', defaultValue: 'identity-service', description: 'Repository name')
-        //string(name: 'PROJECT_NAME', defaultValue: 'PEM', description: 'Project name')
-      
         string(name: 'ARTIFACTORY_URL', defaultValue: '', description: 'Artifactory URL')
         string(name: 'ARTIFACTORY_REPO', defaultValue: '', description: 'Artifactory Repository')
         string(name: 'ARTIFACTORY_USER', defaultValue: '', description: 'Artifactory User')
         string(name: 'ARTIFACTORY_PASSWORD', defaultValue: '', description: 'Artifactory Password')
-       string(name: 'BRANCH_ID', defaultValue: '', description: 'branchId')
+        string(name: 'BRANCH_ID', defaultValue: '', description: 'Branch ID')
     }
- 
+
     stages {
-   
-        stage('build and clean')
-        {
-            steps{
-              script{
-       
+
+        stage('Build and Clean') {
+            steps {
+                script {
                     echo "ARTIFACTORY_URL: ${params.ARTIFACTORY_URL}"
                     echo "ARTIFACTORY_REPO: ${params.ARTIFACTORY_REPO}"
                     echo "ARTIFACTORY_USER: ${params.ARTIFACTORY_USER}"
                     echo "ARTIFACTORY_PASSWORD: ${params.ARTIFACTORY_PASSWORD}"
                     echo "BRANCH_ID: ${params.BRANCH_ID}"
- 
-                
-             
-                 sh '''
-                    chmod +x gradlew \
-                    ./gradlew clean build \
-                     -PartifactoryURL=${params.ARTIFACTORY_URL}  \
-                     -PartifactoryRepo=${params.ARTIFACTORY_REPO} \
-                     -PartifactoryUser=${params.ARTIFACTORY_USER} \ 
-                     -PartifactoryPassword=${params.ARTIFACTORY_PASSWORD} \
-                     -PbranchId=${params.BRANCH_ID}
-      
-                '''
-              }
-                 
+
+                    sh '''
+                        chmod +x gradlew
+                        ./gradlew clean build \
+                        -PartifactoryURL=${params.ARTIFACTORY_URL} \
+                        -PartifactoryRepo=${params.ARTIFACTORY_REPO} \
+                        -PartifactoryUser=${params.ARTIFACTORY_USER} \
+                        -PartifactoryPassword=${params.ARTIFACTORY_PASSWORD} \
+                        -PbranchId=${params.BRANCH_ID}
+                    '''
+                }
             }
         }
-         stage('upload to artifactory')
-         {
-             steps{
-                 sh 'pwd'
-              //  sh 'cd $buildDir/filteredwars '
+
+        stage('Upload to Artifactory') {
+            steps {
+                sh 'pwd'
                 sh './gradlew artifactoryPublish'
-             }
-         }
- 
+            }
+        }
     }
 }
