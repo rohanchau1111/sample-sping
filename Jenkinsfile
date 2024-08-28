@@ -18,7 +18,8 @@ pipeline {
                 script {
                     // Construct the repository URL
                     def repoUrl = "${env.ARTIFACTORY_URL}"
-
+                   def branchId = env.BRANCH_NAME
+                    echo "the branch id is : ${branchId}"
                     // Ensure the Gradle wrapper is executable
                     sh 'chmod +x gradlew'
 
