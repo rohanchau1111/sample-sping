@@ -5,6 +5,12 @@ pipeline {
         string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
          choice(name: 'REPO_NAME', choices: ['b2bi-npm'])
     }
+environment {
+  ARTIFACTORY_CREDS = credentials('articred')
+ ARTIFACTORY_USER =  "${ARTIFACTORY_CREDS_USR}"
+ARTIFACTORY_PASSWORD = "${ARTIFACTORY_CREDS_PSW}"
+ARTIFACTORY_REPO = "${params.REPO_NAME}"
+}
 
     stages {
 
@@ -13,8 +19,14 @@ pipeline {
                 script {
                 
                     sh 'chmod +x gradlew'
-                       sh "./gradlew clean build artifactoryPublish -PartifactoryRepo=${params.REPO_NAME}"
-              
+                       sh """
+
+./gradlew clean build artifactoryPublish \\
+ -PartifactoryRepo=${ARTIFACTORY_REPO}" \\
+ -PartifactoryUser=${ARTIFACTORY_USER}" \\
+-PartifactoryPassword=${ARTIFACTORY_PASSWORD}"
+ 
+   """              
                 }
             }
         }
