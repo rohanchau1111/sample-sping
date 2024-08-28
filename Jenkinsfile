@@ -3,6 +3,7 @@ pipeline {
 environment {
 
     user =credentials('artifactorycreds')
+	}
     stages {
 
 
