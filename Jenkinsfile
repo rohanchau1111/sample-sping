@@ -9,7 +9,7 @@ pipeline {
         ARTIFACTORY_URL = 'http://172.27.225.231:8082/artifactory'
         ARTIFACTORY_CREDS = credentials('articred') // Ensure this credential ID exists in Jenkins
         ARTIFACTORY_REPO = "${params.REPO_NAME}"
-        BRANCH_ID ="${env.BRANCH_NAME}"
+    
     }
 
     stages {
