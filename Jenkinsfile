@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Pass the parameters as command-line arguments to Gradle
-                   sh ```
+                   sh '''
                         chmod +x gradlew
                         ./gradlew clean build \
                         -PartifactoryURL=${params.ARTIFACTORY_URL} \
@@ -45,7 +45,7 @@ pipeline {
                         -PartifactoryUser=${params.ARTIFACTORY_USER} \
                         -PartifactoryPassword=${params.ARTIFACTORY_PASSWORD} \
                         -PbranchId=${params.BRANCH_ID}
-                    ```
+                    '''
                  
                     
                 }
