@@ -10,11 +10,12 @@ environment {
         stage('Build') {
             steps {
                 script {
-                
+                  def repoName = params.REPONAME
+			echo '==============${repoName}'
                    sh '''
                         chmod +x gradlew
                         echo '${user}'
-                        ./gradlew clean build -Partifactorycreds=${user} 
+                        ./gradlew clean build -PrepoName=${params.REPO_NAME} 
                     '''
                  
                     
