@@ -6,9 +6,7 @@ pipeline {
          choice(name: 'REPO_NAME', choices: ['b2bi-npm'])
     }
 environment {
-  //ARTIFACTORY_CREDS = credentials('articred')
-// ARTIFACTORY_USER =  "${ARTIFACTORY_CREDS_USR}"
-//ARTIFACTORY_PASSWORD = "${ARTIFACTORY_CREDS_PSW}"
+ 
 ARTIFACTORY_REPO = "${params.REPO_NAME}"
 }
 
