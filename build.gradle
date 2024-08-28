@@ -76,7 +76,7 @@ publishing {
               artifact bootJar
              } 
         }
-    }
+    
 
      repositories {
          maven {
