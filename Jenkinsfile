@@ -48,7 +48,7 @@ pipeline {
                 sh 'ls -la'
              //   sh 'sudo  ls -la /root/.gradle/caches/modules-2/files-2.1/ch.appuio.techlab/artifactorytest/'
               sh 'sudo ./gradlew  build'
-              sh 'sudo ./gradlew artifactoryPublish'
+          //    sh 'sudo ./gradlew artifactoryPublish'
              //  archiveArtifacts artifacts: 'build/libs/*.jar', followSymlinks: false
              //sh 'sudo ./gradlewJar'
              //  archiveArtifacts artifacts: 'build/libs/*.jar', followSymlinks: false
@@ -72,14 +72,14 @@ pipeline {
         //         )
         //     }
         // }
-    // stage('Upload to arthifact') {
+     stage('Upload to arthifact') {
           
-      //         steps{
+               steps{
         //    sh 'pwd'
         //     sh 'cd build/libs/'
         //         sh 'ls -l'
         //       //  sh 'sudo ./gradlew deleteUnwantedFiles'
-          //         sh 'sudo ./gradlew artifactoryPublish'
+                   sh 'sudo ./gradlew artifactoryPublish'
         //        //   script {
                       
         //         //       def server= Artifactory.server(ARTIFACTORY_SERVER_ID)
