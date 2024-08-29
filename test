@@ -19,3 +19,39 @@ def getArtifactRepo() {
         return artifactRepoList[0]
     }
 }
+-------
+pipeline {
+    agent {
+        label params.AGENT_LABEL
+    }
+    parameters {
+        string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
+        choice(name: 'REPO_NAME', choices: ['b2bi-npm'])
+        choice(name: 'ARTIFACTORY_REPOSITORY', choices: artifactRepoList)
+    }
+    environment {
+        ARTIFACTORY_REPOSITORY = getArtifactRepo()
+    }
+    stages {
+        stage('Example') {
+            steps {
+                script {
+                    echo "Using Artifactory Repository: ${env.ARTIFACTORY_REPOSITORY}"
+                    // Add your build steps here
+                }
+            }
+        }
+    }
+}
+
+def artifactRepoList = ['libs-snapshot-local', 'libs-release-local']
+
+def getArtifactRepo() {
+    if (params.ARTIFACTORY_REPOSITORY) {
+        // Entered parameter if set
+        return params.ARTIFACTORY_REPOSITORY
+    } else {
+        // Default to first item in list otherwise
+        return artifactRepoList[0]
+    }
+}
