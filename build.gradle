@@ -39,7 +39,7 @@ publishing {
                 
                   def sant=''
                   sant = branchId.replaceAll('/','')
-                  version = "${version}-${sant}-SNAPSHOT" 
+                  version = "-${sant}-SNAPSHOT" 
               
                   artifact("${buildDir}/libs/test.zip") {
                     classifier = 'application_sample'
