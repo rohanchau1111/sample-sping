@@ -37,6 +37,7 @@ publishing {
     publications {
               mavenJava(MavenPublication) {
                   groupId='ch.appuio.techlab'
+                     version = "${version}-${branchId}-SNAPSHOT" 
                 //  version = "${version}-SNAPSHOT/"
                    artifactId =''
                   artifact("${buildDir}/libs/test.zip") {
