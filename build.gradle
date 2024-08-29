@@ -82,7 +82,7 @@ artifactory {
             password = "$artifactoryPassword"
         }
         defaults {
-            publications('bootJava')
+            publications('bootJava','mavenJava')
             publishArtifacts = true
         }
     }
