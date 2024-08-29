@@ -35,12 +35,19 @@ dependencies {
 
 publishing {
     publications {
+              mavenJava(MavenPublication) {
+                  
+                 artifact("${buildDir}/libs/test.zip") {
+       classifier = '../application_sample'
+       extension = 'zip'      
+    }
+ }
         bootJava(MavenPublication) {
             artifact bootJar
     
-      artifact("${buildDir}/libs/test.zip") {
-       classifier = '/application_sample'
-       extension = 'zip'
+      // artifact("${buildDir}/libs/test.zip") {
+      //  classifier = '/application_sample'
+      //  extension = 'zip'
            
     }
 
