@@ -35,7 +35,10 @@ dependencies {
 
 publishing {
     publications {
-              mavenJava(MavenPublication) {     
+              mavenJava(MavenPublication) {
+                  groupId= ''
+                  version = ''
+                   artifactId =''
                   artifact("${buildDir}/libs/test.zip") {
                     classifier = 'application_sample'
                   extension = 'zip'      
