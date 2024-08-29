@@ -55,3 +55,66 @@ def getArtifactRepo() {
         return artifactRepoList[0]
     }
 }
+
+
+----
+
+def getArtifactRepo() {
+    if (params.ARTIFACTORY_REPOSITORY) {
+        // Entered parameter if set
+        return params.ARTIFACTORY_REPOSITORY
+    } else {
+        // Default to first item in list otherwise
+        return artifactRepoList[0]
+    }
+}
+
+def artifactRepoList = ['b2bi-npm','libs-snapshot-local', 'libs-release-local']
+
+pipeline {
+    agent { label "${params.AGENT_LABEL}" }
+
+    parameters {
+         string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
+         choice(name: 'ARTIFACTORY_REPOSITORY', choices: artifactRepoList)
+    }
+  environment {
+    ARTIFACTORY_CREDS = credentials('pempublish') 
+    ARTIFACTORY_REPOSITORY = getArtifactRepo()
+    ARTIFACTORY_SERVER_ID= 'ARTIFACTORY'
+  }
+ 
+
+    stages {
+
+        stage('Build and Clean') {
+            steps {
+                script {
+                  def repoUrl = "${env.ARTIFACTORY_URL}"
+                  def branchId = env.GIT_BRANCH
+                  def server = Artifactory.server(ARTIFACTORY_SERVER_ID)
+                  def artifactoryUrl = server.getUrl()
+                  env.ARTIFACTORY_URL = artifactoryUrl 
+                  echo "${repoUrl}-${branchId}-${env.ARTIFACTORY_URL}"
+                    sh 'chmod +x gradlew'
+                       sh """
+                        ./gradlew clean build artifactoryPublish \\
+                        -PartifactoryURL=${env.ARTIFACTORY_URL} \\
+                        -PartifactoryRepo=${env.ARTIFACTORY_REPOSITORY}  \\
+                        -PartifactoryUser=${ARTIFACTORY_CREDS_USR} \\
+                        -PartifactoryPassword=${ARTIFACTORY_CREDS_PSW} \\
+                        -PbranchId=${branchId}
+                      """
+              
+                }
+            }
+        }
+
+     /*   stage('Upload to Artifactory') {
+            steps {
+                sh 'pwd'
+                sh './gradlew artifactoryPublish'
+            }
+        } */
+    }
+}
