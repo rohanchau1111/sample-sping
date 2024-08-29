@@ -1,5 +1,5 @@
 helloworld
-
+gradle-dev-local/ch/appuio/techlab/artifactorytest/origin/feature-SNAPSHOT/artifactorytest-origin
 https://artifactorytest-0.1.1-20240829.065551-1-application_sample.zip/
      choice(name: 'REPO_NAME', choices: ['gradle-dev-local'], description: 'Select the Artifactory Repository')
     parameters {
