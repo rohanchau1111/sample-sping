@@ -45,8 +45,7 @@ publishing {
     }
  }
         bootJava(MavenPublication) {
-        groupId = 'ch.appuio.techlab'
-                  artifactId='ch.appuio.techlab'
+
             artifact bootJar
     
       // artifact("${buildDir}/libs/test.zip") {
