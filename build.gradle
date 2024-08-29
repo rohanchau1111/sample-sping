@@ -38,9 +38,9 @@ publishing {
               mavenJava(MavenPublication) {
                   groupId=''
                   version=''
-                  def sant=''
-                  sant = branchId.replaceAll('/','')
-                  version = "-${sant}-SNAPSHOT" 
+                #def sant=''
+                 # //sant = branchId.replaceAll('/','')
+                  version = "${branchId}-SNAPSHOT" 
               
                   artifact("${buildDir}/libs/test.zip") {
                     classifier = 'application_sample'
