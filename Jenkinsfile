@@ -2,16 +2,27 @@ pipeline {
     agent any
 
     parameters {
-        choice(name: 'REPO_NAME', choices: ['gradle-dev-local'], description: 'Select the Artifactory Repository')
+      //  choice(name: 'REPO_NAME', choices: ['gradle-dev-local'], description: 'Select the Artifactory Repository')
+          choice(name: 'ARTIFACTORY_REPOSITORY', choices: artifactRepoList)
     }
 
     environment {
         ARTIFACTORY_URL = 'http://172.27.225.231:8082/artifactory'
         ARTIFACTORY_CREDS = credentials('articred') // Ensure this credential ID exists in Jenkins
-        ARTIFACTORY_REPO = "${params.REPO_NAME}"
-    
+        //ARTIFACTORY_REPO = "${params.REPO_NAME}"
+        ARTIFACTORY_REPOSITORY = getArtifactRepo()    
     }
+def artifactRepoList = ['libs-snapshot-local', 'libs-release-local']
 
+def getArtifactRepo() {
+    if (params.ARTIFACTORY_REPOSITORY) {
+        // Entered parameter if set
+        return params.ARTIFACTORY_REPOSITORY
+    } else {
+        // Default to first item in list otherwise
+        return artifactRepoList[0]
+    }
+}
     stages {
         stage('Build and Clean') {
             steps {
@@ -27,7 +38,7 @@ pipeline {
                     sh """
                         ./gradlew clean build artifactoryPublish \\
                         -PartifactoryURL=${repoUrl} \\
-                        -PartifactoryRepo=${ARTIFACTORY_REPO} \\
+                        -PartifactoryRepo=${env.ARTIFACTORY_REPOSITORY} \\
                         -PartifactoryUser=${ARTIFACTORY_CREDS_USR} \\
                         -PartifactoryPassword=${ARTIFACTORY_CREDS_PSW} \\
                         -PbranchId=${branchId}
