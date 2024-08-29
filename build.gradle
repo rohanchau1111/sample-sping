@@ -8,6 +8,7 @@ plugins {
 
 group = 'ch.appuio.techlab'
 version = '0.1.1-SNAPSHOT'
+//version = '0.1.1'
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
