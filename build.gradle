@@ -37,10 +37,10 @@ publishing {
     publications {
               mavenJava(MavenPublication) {
                   groupId = 'ch.appuio.techlab'
-                  artifactId='ch.appuio.techlab'
+            
                   artifact("${buildDir}/libs/test.zip") {
-       classifier = '${groupId}/application_sample'
-       extension = 'zip'      
+                  classifier = 'application_sample'
+                  extension = 'zip'      
     }
  }
         bootJava(MavenPublication) {
