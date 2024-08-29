@@ -38,7 +38,7 @@ publishing {
     //           mavenJava(MavenPublication) {
              
     // }
- }
+ 
         bootJava(MavenPublication) {
      groupId='ch.appuio.techlab'
                   version='0.1.1-SNAPSHOT'
@@ -60,6 +60,7 @@ publishing {
  
         }
     }
+}
 
 
 
