@@ -36,12 +36,11 @@ dependencies {
 publishing {
     publications {
               mavenJava(MavenPublication) {
-                  groupId='ch.appuio.techlab'
+                
                   def sant=''
-                   sant = branchId.replaceAll('/','')
-                     version = "${version}-${sant}-SNAPSHOT" 
-                //  version = "${version}-SNAPSHOT/"
-                   artifactId =''
+                  sant = branchId.replaceAll('/','')
+                  version = "${version}-${sant}-SNAPSHOT" 
+              
                   artifact("${buildDir}/libs/test.zip") {
                     classifier = 'application_sample'
                   extension = 'zip'      
