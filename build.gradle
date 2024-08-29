@@ -37,6 +37,12 @@ publishing {
     publications {
         bootJava(MavenPublication) {
             artifact bootJar
+    //  artifactId ='test'
+      //version = '1.0'
+      artifact("${buildDir}/sample") {
+       classifier = ''
+       extension = 'yaml'
+    }
         }
     }
 }
