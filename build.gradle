@@ -37,16 +37,33 @@ publishing {
     publications {
         bootJava(MavenPublication) {
             artifact bootJar
-    //  artifactId ='test'
-      //version = '1.0'
-      artifact("${buildDir}/sample") {
+    
+      artifact("${buildDir}/libs/test.zip") {
        classifier = ''
-       extension = 'yaml'
+       extension = 'zip'
     }
+
+ 
         }
     }
 }
 
+
+task createZip(type: Zip) {
+
+    from file('test')
+    archiveFileName.set('test.zip')
+    destinationDirectory.set(file("$buildDir/libs/"))
+
+  //  from "$buildDir/libs/"
+   doLast {
+   println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
+}
+   doFirst {
+
+   println 'archiving file ....${archiveName}'
+}
+}
 artifactory {
     contextUrl = "$artifactoryURL"
     publish {
@@ -60,4 +77,10 @@ artifactory {
             publishArtifacts = true
         }
     }
+}
+
+tasks.build {
+   // dependsOn copyDependencies
+    //dependsOn printDependencyPath
+    dependsOn  createZip
 }
