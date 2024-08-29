@@ -1,1 +1,18 @@
 
+  bootJava(MavenPublication) {
+           
+
+            version = "${version}-${branchId}-SNAPSHOT" 
+            from components.web
+            artifact tasks.named("bootWar")
+           
+             artifact("${projectDir}/application_sample.yml.zip") {
+              classifier = 'application_sample_yml'
+               extension = 'zip'
+             }
+               artifact("${projectDir}/application_sample.yml") {
+              classifier = 'application_demo'
+               extension = 'yml'
+           }
+        }
+    
