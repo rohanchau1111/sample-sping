@@ -42,11 +42,11 @@ publishing {
         bootJava(MavenPublication) {
      groupId='ch.appuio.techlab'
             def sanitizedBranchId = branchId.replaceAll('/', '_')
-
+      
            version = "${version}-${sanitizedBranchId}-SNAPSHOT"
 
             // Construct the final artifactId
-            artifactId = "${project.name}-${sanitizedBranchId}"
+            artifactId = "${project.name}"
 
             // Define the artifacts to be published
             artifact("${buildDir}/libs/test.zip") {
