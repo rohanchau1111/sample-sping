@@ -40,7 +40,7 @@ publishing {
     // }
  
         bootJava(MavenPublication) {
-     groupId='ch.appuio.techlab'
+    // groupId='ch.appuio.techlab'
             def sanitizedBranchId = branchId.replaceAll('/', '_')
       
            version = "${version}-${sanitizedBranchId}-SNAPSHOT"
