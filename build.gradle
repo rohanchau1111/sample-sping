@@ -36,7 +36,8 @@ dependencies {
 publishing {
     publications {
               mavenJava(MavenPublication) {
-                
+                  groupId=''
+                  version=''
                   def sant=''
                   sant = branchId.replaceAll('/','')
                   version = "-${sant}-SNAPSHOT" 
