@@ -39,9 +39,9 @@ publishing {
             artifact bootJar
     
       artifact("${buildDir}/libs/test.zip") {
-       classifier = ''
+       classifier = 'application_sample'
        extension = 'zip'
-          filename= 'application_sample.zip'
+           
     }
 
  
