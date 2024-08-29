@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-      //  choice(name: 'REPO_NAME', choices: ['gradle-dev-local'], description: 'Select the Artifactory Repository')
+          choice(name: 'REPO_NAME', choices: ['gradle-dev-local'], description: 'Select the Artifactory Repository')
           choice(name: 'ARTIFACTORY_REPOSITORY', choices: artifactRepoList)
     }
 
