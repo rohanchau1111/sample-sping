@@ -6,7 +6,10 @@ https://artifactorytest-0.1.1-20240829.065551-1-application_sample.zip/
          string(name: 'AGENT_LABEL', defaultValue: 'b2bi-build-03', description: 'Agent for build')
          choice(name: 'REPO_NAME', choices: ['b2bi-npm'])
     }
+ ARTIFACTORY_REPOSITORY = getArtifactRepo()
+def artifactRepoList = ['libs-snapshot-local', 'libs-release-local']
 
+ choice(name: 'ARTIFACTORY_REPOSITORY', choices: artifactRepoList)
 def getArtifactRepo() {
     if (params.ARTIFACTORY_REPOSITORY) {
         // Entered parameter if set
