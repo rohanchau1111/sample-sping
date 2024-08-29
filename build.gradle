@@ -37,6 +37,7 @@ publishing {
     publications {
               mavenJava(MavenPublication) {
                   groupId='ch.appuio.techlab'
+                  def sant=''
                    sant = branchId.replaceAll('/','')
                      version = "${version}-${sant}-SNAPSHOT" 
                 //  version = "${version}-SNAPSHOT/"
