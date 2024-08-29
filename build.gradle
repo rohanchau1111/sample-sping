@@ -41,15 +41,9 @@ publishing {
  
         bootJava(MavenPublication) {
      groupId='ch.appuio.techlab'
-               
-                  groupId = 'ch.appuio.techlab'
-            def baseVersion = '0.1.1'  // Set your base version here
-            
-            
             def sanitizedBranchId = branchId.replaceAll('/', '_')
 
-            
-            version = "${baseVersion}-${sanitizedBranchId}-SNAPSHOT"
+           version = "${version}-${sanitizedBranchId}-SNAPSHOT"
 
             // Construct the final artifactId
             artifactId = "${project.name}-${sanitizedBranchId}"
