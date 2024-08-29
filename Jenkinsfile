@@ -1,3 +1,14 @@
+def artifactRepoList = ['libs-snapshot-local', 'libs-release-local']
+
+def getArtifactRepo() {
+    if (params.ARTIFACTORY_REPOSITORY) {
+        // Entered parameter if set
+        return params.ARTIFACTORY_REPOSITORY
+    } else {
+        // Default to first item in list otherwise
+        return artifactRepoList[0]
+    }
+}
 pipeline {
     agent any
 
@@ -12,17 +23,7 @@ pipeline {
         //ARTIFACTORY_REPO = "${params.REPO_NAME}"
         ARTIFACTORY_REPOSITORY = getArtifactRepo()    
     }
-def artifactRepoList = ['libs-snapshot-local', 'libs-release-local']
 
-def getArtifactRepo() {
-    if (params.ARTIFACTORY_REPOSITORY) {
-        // Entered parameter if set
-        return params.ARTIFACTORY_REPOSITORY
-    } else {
-        // Default to first item in list otherwise
-        return artifactRepoList[0]
-    }
-}
     stages {
         stage('Build and Clean') {
             steps {
