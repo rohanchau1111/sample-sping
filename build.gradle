@@ -41,6 +41,7 @@ publishing {
       artifact("${buildDir}/libs/test.zip") {
        classifier = ''
        extension = 'zip'
+          filename= 'application_sample.zip'
     }
 
  
