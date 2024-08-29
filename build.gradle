@@ -37,7 +37,8 @@ publishing {
     publications {
               mavenJava(MavenPublication) {
                   groupId='ch.appuio.techlab'
-                     version = "${version}-${branchId}-SNAPSHOT" 
+                  def sant = branchId.replaceAll('/','')
+                     version = "${version}-${san}-SNAPSHOT" 
                 //  version = "${version}-SNAPSHOT/"
                    artifactId =''
                   artifact("${buildDir}/libs/test.zip") {
