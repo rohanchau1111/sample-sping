@@ -152,3 +152,26 @@ stage('Build and Clean') {
         }
     }
 }
+----------
+     bootJava(MavenPublication) {
+     groupId='ch.appuio.techlab'
+            def sanitizedBranchId = branchId.replaceAll('/', '_')
+      
+           version = "${version}-${sanitizedBranchId}-SNAPSHOT"
+
+            // Construct the final artifactId
+            artifactId = "${project.name}"
+
+            // Define the artifacts to be published
+            artifact("${buildDir}/libs/test.zip") {
+                classifier = 'application_sample'
+                extension = 'zip'
+            artifact bootJar
+    
+      // artifact("${buildDir}/libs/test.zip") {
+      //  classifier = '/application_sample'
+      //  extension = 'zip'
+           
+    }
+
+ 
