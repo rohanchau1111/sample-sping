@@ -40,8 +40,8 @@ publishing {
                 groupId=''
             
                   artifact("${buildDir}/libs/test.zip") {
-                  artifactId='application'
-                      classifier = 'application_sample'
+                  artifactId='/application'
+                      //classifier = 'application_sample'
                   extension = 'zip'      
     }
  }
