@@ -41,7 +41,7 @@ publishing {
  
         bootJava(MavenPublication) {
      groupId='ch.appuio.techlab'
-                  version='0.1.1-SNAPSHOT'
+               
                 def sant=''
                 sant = branchId.replaceAll('[a-zA-Z0-9]/','_')
                   version = "${branchId}-SNAPSHOT" 
