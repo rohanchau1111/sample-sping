@@ -118,3 +118,35 @@ pipeline {
         } */
     }
 }
+
+
+---
+
+
+stage('Build and Clean') {
+    steps {
+        script {
+            // Get Artifactory server URL
+            def server = Artifactory.server(ARTIFACTORY_SERVER_ID)
+            env.ARTIFACTORY_URL = server.getUrl()
+            
+            // Set Artifactory credentials as environment variables
+            env.ARTIFACTORY_USER = ARTIFACTORY_CREDS_USR
+            env.ARTIFACTORY_PASSWORD = ARTIFACTORY_CREDS_PSW
+            
+            // Echo combined info for debugging
+            echo "${env.ARTIFACTORY_URL}-${env.GIT_BRANCH}-${env.ARTIFACTORY_URL}"
+            
+            // Make gradlew executable and run the build and publish tasks
+            sh 'chmod +x gradlew'
+            sh """
+                ./gradlew clean build artifactoryPublish \\
+                -PartifactoryURL=${env.ARTIFACTORY_URL} \\
+                -PartifactoryRepo=${env.ARTIFACTORY_REPOSITORY} \\
+                -PartifactoryUser=${env.ARTIFACTORY_USER} \\
+                -PartifactoryPassword=${env.ARTIFACTORY_PASSWORD} \\
+                -PbranchId=${env.GIT_BRANCH}
+            """
+        }
+    }
+}
