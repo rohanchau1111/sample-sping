@@ -38,8 +38,8 @@ publishing {
               mavenJava(MavenPublication) {
                   groupId=''
                   version=''
-                #def sant=''
-                 # //sant = branchId.replaceAll('/','')
+              //  #def sant=''
+                // # //sant = branchId.replaceAll('/','')
                   version = "${branchId}-SNAPSHOT" 
               
                   artifact("${buildDir}/libs/test.zip") {
