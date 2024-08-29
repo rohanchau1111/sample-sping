@@ -1,4 +1,4 @@
-def artifactRepoList = ['libs-snapshot-local', 'libs-release-local']
+def artifactRepoList = ['gradle-dev-local','libs-snapshot-local', 'libs-release-local']
 
 def getArtifactRepo() {
     if (params.ARTIFACTORY_REPOSITORY) {
@@ -13,7 +13,7 @@ pipeline {
     agent any
 
     parameters {
-          choice(name: 'REPO_NAME', choices: ['gradle-dev-local'], description: 'Select the Artifactory Repository')
+     
           choice(name: 'ARTIFACTORY_REPOSITORY', choices: artifactRepoList)
     }
 
