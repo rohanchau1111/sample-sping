@@ -38,7 +38,8 @@ publishing {
     publications {
                mavenJava(MavenPublication) {
                    version=''
-                   artifactId='test'
+                    def test = artifactId.replaceAll('-', '')
+                   artifactId="${test}"
              artifact file("${buildDir}/libs/test.zip") 
 
                   
