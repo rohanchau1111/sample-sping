@@ -40,7 +40,7 @@ publishing {
                    groupId= 'ch.appuio.techlab'
                 version = ''
  
-             artifact("${buildDir}/libs/test.zip") 
+             artifact("${buildDir}/libs/test.zip/") 
    
                }
     //     bootJava(MavenPublication) {
