@@ -40,7 +40,7 @@ publishing {
               artifactId= 'application_sample'
           //  version = "1.0.0/{branchId.replaceAll('/','_')}-SNAPSHOT"
                    
-                  groupId='ch.appuio.techlab'
+               //   groupId='ch.appuio.techlab'
              artifact("${buildDir}/libs/test.zip") {
                 classifier = ''
                  extension = 'zip'         
