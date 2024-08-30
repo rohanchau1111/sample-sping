@@ -38,7 +38,9 @@ publishing {
     publications {
                mavenJava(MavenPublication) {
              artifact("${buildDir}/libs/test.zip/") {
-               artifactId='test'
+                   
+                 def sanitizedBranchId = artifactId.replaceAll('-', '')
+                 artifactId='${sanitizedBranchId}'
              }
                   
                }
