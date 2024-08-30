@@ -37,12 +37,8 @@ dependencies {
 publishing {
     publications {
                mavenJava(MavenPublication) {
-             artifact file("${buildDir}/libs/test.zip") {
-                 artifactId=''
-                 version=''
-                 classifier = 'test'
-                 extension = 'zip'
-             }
+             artifact file("${buildDir}/libs/test.zip") 
+
                   
                }
     //     bootJava(MavenPublication) {
