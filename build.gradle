@@ -37,9 +37,6 @@ dependencies {
 publishing {
     publications {
                mavenJava(MavenPublication) {
-                   version=''
-                   artifactId='abc/'
-                   
              artifact file("${projectDir}/abc.txt")
                }
     //     bootJava(MavenPublication) {
