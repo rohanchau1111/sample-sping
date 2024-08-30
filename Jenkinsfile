@@ -41,8 +41,7 @@ pipeline {
                         -PartifactoryURL=${repoUrl} \\
                         -PartifactoryRepo=${env.ARTIFACTORY_REPOSITORY} \\
                         -PartifactoryUser=${ARTIFACTORY_CREDS_USR} \\
-                        -PartifactoryPassword=${ARTIFACTORY_CREDS_PSW} \\
-                       // -PbranchId=${branchId}
+                        -PartifactoryPassword=${ARTIFACTORY_CREDS_PSW} 
                     """
                 }
             }
