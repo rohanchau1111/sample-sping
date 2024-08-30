@@ -39,9 +39,9 @@ publishing {
                mavenJava(MavenPublication) {
         //    artifactId= 'application_sample'
                 version = ''
-                   groupId='ch.appuio.techlab'
+                 //  groupId='ch.appuio.techlab'
              artifact("${buildDir}/libs/test.zip") {
-                classifier = ''
+                classifier = 'application_sample'
                  extension = 'zip'         
      }
                }
