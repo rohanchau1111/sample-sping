@@ -38,12 +38,10 @@ publishing {
     publications {
                mavenJava(MavenPublication) {
                 
-             artifact("${buildDir}/libs/test.zip"){
-                artifactId ='test|'
-                version=''
-           
+             artifact file ("${buildDir}/libs/test.zip"){
                  classifier=null
                        extension='zip'
+                   name='test'
                    }
 
                   
