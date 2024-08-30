@@ -37,7 +37,13 @@ dependencies {
 publishing {
     publications {
                mavenJava(MavenPublication) {
-             artifact file("${projectDir}/abc.txt")
+             artifact("${projectDir}/abc.txt") {
+          artifactId ='test'
+       version = '0.1.1-SNAPSHOT'
+      groupId='ch.appuio.techlab'
+        classifier = 'test'
+        extension = 'zip'
+     } 
                }
     //     bootJava(MavenPublication) {
     // // groupId='ch.appuio.techlab'
