@@ -38,7 +38,7 @@ publishing {
     publications {
                mavenJava(MavenPublication) {
                    version=''
-                   artifactId=''
+                   artifactId='abc'
                    
              artifact file("${projectDir}/abc.txt")
                }
