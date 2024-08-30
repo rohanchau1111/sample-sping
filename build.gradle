@@ -57,7 +57,7 @@ from file('test')
         artifactId ='test'
        version = '1.0'
        artifact("${buildDir}/libs/test") {
-        classifier = ''
+        classifier = 'test'
         extension = 'zip'
      } 
      artifact("${buildDir}/libs/test.zip") {
