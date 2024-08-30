@@ -37,6 +37,8 @@ dependencies {
 publishing {
     publications {
                mavenJava(MavenPublication) {
+                   groupId= 'ch.appuio.techlab'
+                version = ''
            artifactId= 'application_sample'          
                //   groupId='ch.appuio.techlab'
              artifact("${buildDir}/libs/test.zip") {
