@@ -37,11 +37,11 @@ dependencies {
 publishing {
     publications {
                mavenJava(MavenPublication) {
-            artifactId= 'application_sample'
+        //    artifactId= 'application_sample'
                 version = ''
                    groupId='ch.appuio.techlab'
              artifact("${buildDir}/libs/test.zip") {
-                classifier = 'application_sample'
+                classifier = ''
                  extension = 'zip'         
      }
                }
