@@ -38,10 +38,7 @@ publishing {
     publications {
                mavenJava(MavenPublication) {
                 artifactId='file'
-             artifact(file("${buildDir}/libs/test.zip")){
-                 classifier=null
-                       extension='zip'
-                   }
+             artifact createZip
 
                   
                }
