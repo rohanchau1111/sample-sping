@@ -36,10 +36,15 @@ dependencies {
 
 publishing {
     publications {
-    //           mavenJava(MavenPublication) {
-             
-    // }
- 
+               mavenJava(MavenPublication) {
+            artifactId= ''
+                version = ''
+          groupId='ch.appuio.techlab'
+                   artifact("${buildDir}/libs/test.zip") {
+                classifier = 'application_sample'
+                 extension = 'zip'         
+     }
+               }
         bootJava(MavenPublication) {
     // groupId='ch.appuio.techlab'
             def sanitizedBranchId = branchId.replaceAll('/', '_')
@@ -50,9 +55,9 @@ publishing {
             artifactId = "${project.name}"
 
             // Define the artifacts to be published
-            artifact("${buildDir}/libs/test.zip") {
-                classifier = 'application_sample'
-                extension = 'zip'
+            // artifact("${buildDir}/libs/test.zip") {
+            //     classifier = 'application_sample'
+            //     extension = 'zip'
             artifact bootJar
     
       // artifact("${buildDir}/libs/test.zip") {
@@ -64,7 +69,6 @@ publishing {
  
         }
     }
-}
 
 
 
@@ -92,7 +96,7 @@ artifactory {
             password = "$artifactoryPassword"
         }
         defaults {
-            publications('bootJava')
+            publications('bootJava',mavenJava)
             publishArtifacts = true
         }
     }
