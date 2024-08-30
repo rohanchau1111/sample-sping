@@ -37,7 +37,7 @@ dependencies {
 publishing {
     publications {
                mavenJava(MavenPublication) {
-             artifact source: createZip, extension: 'zip'
+             artifact file("${projectDir}/abc.txt")
                }
     //     bootJava(MavenPublication) {
     // // groupId='ch.appuio.techlab'
