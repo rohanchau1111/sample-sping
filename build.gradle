@@ -60,10 +60,7 @@ from file('test')
         classifier = 'test'
         extension = 'zip'
      } 
-     artifact("${buildDir}/libs/test.zip") {
-      classifier = ''
-      extension = 'zip'
-   }
+   
   }
     
         bootJava(MavenPublication) {
