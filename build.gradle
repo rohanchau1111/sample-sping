@@ -39,9 +39,9 @@ publishing {
                mavenJava(MavenPublication) {
              artifact("${buildDir}/libs/test.zip") {
                  artifactId=''
-                 
                  version=''
-              
+                 classifier = 'test'
+                 extension = 'zip'
              }
                   
                }
