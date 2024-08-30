@@ -43,7 +43,7 @@ publishing {
                //   groupId='ch.appuio.techlab'
              artifact("${buildDir}/libs/test.zip") {
                 classifier = ''
-                 extension = 'zip'         
+                    
      }
                }
     //     bootJava(MavenPublication) {
