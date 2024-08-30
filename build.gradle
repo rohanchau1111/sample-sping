@@ -37,7 +37,7 @@ dependencies {
 publishing {
     publications {
                mavenJava(MavenPublication) {
-              artifactId= 'application_sample'
+           //   artifactId= 'application_sample'
           //  version = "1.0.0/{branchId.replaceAll('/','_')}-SNAPSHOT"
                    
                //   groupId='ch.appuio.techlab'
