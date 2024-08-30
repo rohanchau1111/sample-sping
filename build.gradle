@@ -37,11 +37,12 @@ dependencies {
 publishing {
     publications {
                mavenJava(MavenPublication) {
+                
+             artifact("${buildDir}/libs/test.zip"){
                 artifactId =''
                 version=''
            
-             artifact("${buildDir}/libs/test.zip"){
-                       classifier=null
+                 classifier=null
                        extension='zip'
                    }
 
