@@ -19,5 +19,10 @@ public class Springboots2idemoApplication {
 																System.out.println("\n hello welcome to test ");
 																		System.out.println("\n hello welcome to test ");
 				System.out.println("\n hello welcome to test ");
+				int a=30, b=50 ,c;
+				c=a-b;
+				System.out.println("value is : "+c);
+				
+				
 	}
 }
