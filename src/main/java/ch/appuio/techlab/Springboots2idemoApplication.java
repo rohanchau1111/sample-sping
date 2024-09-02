@@ -8,5 +8,16 @@ public class Springboots2idemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Springboots2idemoApplication.class, args);
+
+		System.out.println("\n hello welcome to test ");
+				System.out.println("\n hello welcome to test ");
+						System.out.println("\n hello welcome to test ");
+								System.out.println("\n hello welcome to test ");
+										System.out.println("\n hello welcome to test ");
+												System.out.println("\n hello welcome to test ");
+														System.out.println("\n hello welcome to test ");
+																System.out.println("\n hello welcome to test ");
+																		System.out.println("\n hello welcome to test ");
+				System.out.println("\n hello welcome to test ");
 	}
 }
