@@ -50,7 +50,7 @@ pipeline {
     post{
 
  success{
-    jacoco()
+      jacoco deltaComplexityCoverage: '7', maximumComplexityCoverage: '6'
  }
     }
 }
