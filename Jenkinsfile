@@ -46,6 +46,21 @@ pipeline {
                 }
             }
         }
+            stage('Test') {
+            steps {
+                script {
+                    sh './gradlew test'
+                }
+            }
+        }
+
+        stage('Code Coverage') {
+            steps {
+                script {
+                    sh './gradlew jacocoTestReport'
+                }
+            }
+        }
     }
     post{
 
