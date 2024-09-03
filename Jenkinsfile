@@ -43,7 +43,7 @@ pipeline {
                         -PartifactoryUser=${ARTIFACTORY_CREDS_USR} \\
                         -PartifactoryPassword=${ARTIFACTORY_CREDS_PSW} 
                     """
-                    // test jacocoTestReport 
+                    
                 }
             }
         }
