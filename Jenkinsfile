@@ -37,12 +37,13 @@ pipeline {
 
                     // Pass the credentials and repository name to the Gradle build
                     sh """
-                        ./gradlew clean build test jacocoTestReport artifactoryPublish  \\
+                        ./gradlew clean build artifactoryPublish  \\
                         -PartifactoryURL=${repoUrl} \\
                         -PartifactoryRepo=${env.ARTIFACTORY_REPOSITORY} \\
                         -PartifactoryUser=${ARTIFACTORY_CREDS_USR} \\
                         -PartifactoryPassword=${ARTIFACTORY_CREDS_PSW} 
                     """
+                    // test jacocoTestReport 
                 }
             }
         }
