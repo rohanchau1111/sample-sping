@@ -55,10 +55,7 @@ pipeline {
  success{
 //   jacoco()
      echo "done!"
-     
-     cleanWs()
-     
-     
+ 
  }
     }
 }
