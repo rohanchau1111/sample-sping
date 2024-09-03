@@ -68,6 +68,7 @@ dependencies {
     //    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
    //     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+      testImplementation('junit:junit:4.13.2')
 }
 
 tasks.named('test') {
