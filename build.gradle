@@ -1,20 +1,10 @@
 plugins {
-    id 'java'
-    id 'maven-publish'
-    id 'com.jfrog.artifactory' version '5.1.12'
-    id 'org.springframework.boot' version '3.3.2'
-    id 'io.spring.dependency-management' version '1.1.6'
-     id 'jacoco'
-}
+        id 'java'
+        id 'war'
+        id 'org.springframework.boot' version '3.4.0-SNAPSHOT'
+        id 'io.spring.dependency-management' version '1.1.6'
 
-group = 'ch.appuio.techlab'
-//version = '0.1.1'
-//version = '0.1.1'
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-repositories {
-    mavenCentral()
+      id 'jacoco'
 }
 
 
@@ -44,8 +34,23 @@ jacocoTestCoverageVerification {
 }
 
 
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+        toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+        }
+}
+
+repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://repo.spring.io/snapshot' }
+}
+
 dependencies {
-    compileOnly('org.springframework.boot:spring-boot-starter-validation')
+        compileOnly('org.springframework.boot:spring-boot-starter-validation')
     implementation('org.springframework.boot:spring-boot-starter')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -59,81 +64,11 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-    testImplementation('junit:junit:4.13.2')
-}
-
-publishing {
-    publications {
-               mavenJava(MavenPublication) {
-             artifact("${projectDir}/abc.txt") {
-          artifactId ='test'
-       version = '0.1.1-SNAPSHOT'
-      groupId='ch.appuio.techlab'
-        classifier = 'test'
-        extension = 'zip'
-     } 
-               }
-    //     bootJava(MavenPublication) {
-    // // groupId='ch.appuio.techlab'
-    //         def sanitizedBranchId = branchId.replaceAll('/', '_')
-      
-    //        version = "${version}-${sanitizedBranchId}-SNAPSHOT"
-
-    //         // Construct the final artifactId
-    //         artifactId = "${project.name}"
-
-    //         // Define the artifacts to be published
-    //         // artifact("${buildDir}/libs/test.zip") {
-    //         //     classifier = 'application_sample'
-    //         //     extension = 'zip'
-    //         artifact bootJar
     
-    //   // artifact("${buildDir}/libs/test.zip") {
-    //   //  classifier = '/application_sample'
-    //   //  extension = 'zip'
-           
-    // }
-
- 
-        }
-    }
-
-
-
-task createZip(type: Zip) {
-
-    from file('test')
-    archiveFileName.set('test.zip')
-    destinationDirectory.set(file("$buildDir/libs/"))
-
-  //  from "$buildDir/libs/"
-   doLast {
-   println 'Zip file created at ${destinationDirectory}/${archiveFileName}'
-}
-   doFirst {
-
-   println 'archiving file ....${archiveName}'
-}
-}
-artifactory {
-    contextUrl = "$artifactoryURL"
-    publish {
-        repository {
-            repoKey = "$artifactoryRepo"
-            username = "$artifactoryUser"
-            password = "$artifactoryPassword"
-        }
-        defaults {
-            publications('mavenJava')
-            publishArtifacts = true
-        }
-    }
-}
-
-tasks.build {
-   // dependsOn copyDependencies
-    //dependsOn printDependencyPath
-    dependsOn  createZip
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+   //     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
