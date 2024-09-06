@@ -1,0 +1,95 @@
+plugins {
+    id 'gatewayapi-config-java-library'
+    id 'gatewayapi-config-lombok'
+    id 'gatewayapi-config-springboot'
+    id 'java'
+    id 'war'
+    id 'maven-publish'
+    id 'com.jfrog.artifactory' version '5.1.12'
+}
+repositories {
+    maven {
+        url "http://artifactory.syncdi1.us.syncsort.com:80/artifactory/b2bi-release-virtual/"
+        allowInsecureProtocol = true
+        metadataSources {
+            mavenPom()
+            artifact()
+        }
+    }
+}
+
+dependencies {
+    implementation project(':fg-data-entities')
+    implementation project(':fg-data')
+    implementation project(':b2b-data-entities')
+    implementation project(':b2b-data')
+    implementation project(':fg-rest')
+    implementation project(':b2b-rest-core')
+    implementation project(':b2b-rest')
+    implementation project(':b2b-rest-core')
+    implementation project(':identity-client')    
+    
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //implementation 'com.ibm.db2.jcc:db2jcc:db2jcc4'  // if you want to connect with db2 database, enable it
+    
+    // Ref - https://docs.spring.io/spring-boot/docs/3.0.4/gradle-plugin/reference/htmlsingle/#packaging-executable
+    // Add embedded tomcat as providedRuntime. This ensures it is packaged in the 
+    // war file’s WEB-INF/lib-provided directory from where they will not conflict 
+    // with the external container’s own classes.
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+    // To serialize our REST API request and response in an XML format,
+    // add the Jackson XML extension (jackson-dataformat-xml) to our dependencies,
+    // or fallback to the JAXB implementation by using the @XmlRootElement annotation on our resource.
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  //  implementation 'com.oracle.database.jdbc:ojdbc8:12.2.0.1'
+  //  implementation 'com.ibm.db2.jcc:db2jcc:db2jcc4'
+  //  implementation 'com.microsoft.sqlserver:mssql-jdbc:9.4.0.jre11'
+    
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+  
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.h2database:h2'
+    testImplementation 'com.google.code.gson:gson:2.10.1'
+    implementation group: 'org.apache.sshd', name: 'sshd-sftp', version: '2.10.0'
+    implementation group: 'org.apache.sshd', name: 'sshd-putty', version: '2.10.0'
+
+    implementation group: 'com.ibm.b2bi.3rdparty', name: 'maverick-legacy-server', version: '1.7.56-all'
+    implementation group: 'com.ibm.b2bi.3rdparty', name: 'maverick-legacy-client', version: '1.7.56-all'
+    implementation group: 'com.ibm.b2bi.3rdparty', name: 'maverick-legacy-server', version: '1.7.56-no-common'
+
+}
+publishing {
+    publications {
+        bootJava(MavenPublication) {
+            def BranchId = branchId.replaceAll('/', '_') 
+            version = "${version}-${BranchId}-SNAPSHOT" 
+            from components.web
+           }
+        }
+}
+
+artifactory {
+    publish {
+        contextUrl = "$artifactoryURL"
+        repository {
+            repoKey = "$artifactoryRepo"
+            username = "$artifactoryUser"
+            password = "$artifactoryPassword"
+        }
+        defaults {
+            publications('bootJava') 
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+}
+springBoot {
+    mainClass = 'com.precisely.b2b.fg.FileGatewayRestApplication'
+}
