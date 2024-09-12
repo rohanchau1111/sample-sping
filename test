@@ -1,3 +1,29 @@
+b2bi-identity
+buildSrc
+gradle/wrapper
+identity-liberty
+identity-svc
+identity-test-resource-server
+identity-ui
+pem-identity
+.gitignore	
+build.gradle	 
+gradle.properties
+PEM-26605 basic Spring OAuth Auth Server 
+PEM-26605 basic Spring OAuth Auth Server
+Jenkinsfile 	
+settings.gradle
+
+
+
+
+
+
+
+
+
+
+
 plugins {
     id 'identity-config-java-library'
     id 'identity-config-lombok'
