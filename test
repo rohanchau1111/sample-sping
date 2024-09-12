@@ -93,3 +93,92 @@ tasks.withType(JavaCompile) {
     dependsOn downloadWar
 }
 
+================================
+
+
+
+
+
+
+
+
+
+
+
+
+def getArtifactRepo() {
+    if (params.ARTIFACTORY_REPOSITORY) {
+        return params.ARTIFACTORY_REPOSITORY
+    } else {
+        return artifactRepoList[0]
+    }
+}
+
+def nodeLabel = 'b2bi-build-03'
+def artifactRepoList = ['libs-snapshot-local', 'libs-release-local']
+
+pipeline {
+    agent { label nodeLabel }
+    parameters {
+         choice(name: 'ARTIFACTORY_REPOSITORY', choices: artifactRepoList)
+    }
+  environment {
+    ARTIFACTORY_CREDS = credentials('artifactory-publisher') 
+    ARTIFACTORY_REPOSITORY = getArtifactRepo()
+    ARTIFACTORY_SERVER_ID= 'ARTIFACTORY'
+  }
+ 
+
+    stages {
+
+        stage('Build and Clean') {
+            steps {
+                script {
+                
+                  def branchId = env.GIT_BRANCH
+                  def server = Artifactory.server(ARTIFACTORY_SERVER_ID)
+                  def artifactoryUrl = server.getUrl()
+                  
+                  env.ARTIFACTORY_URL = artifactoryUrl 
+                  env.ARTIFACTORY_USER = ARTIFACTORY_CREDS_USR
+                  env.ARTIFACTORY_PASSWORD = ARTIFACTORY_CREDS_PSW
+                    
+                  sh 'chmod +x gradlew'
+                       sh """
+                       echo 'testing -----------'
+                        ./gradlew clean build artifactoryPublish \\
+                        -PartifactoryURL=${env.ARTIFACTORY_URL} \\
+                        -PartifactoryRepo=${env.ARTIFACTORY_REPOSITORY}  \\
+                        -PartifactoryUser=${env.ARTIFACTORY_USER} \\
+                        -PartifactoryPassword=${env.ARTIFACTORY_PASSWORD} \\
+                        -PbranchId=${branchId}
+                      """
+              
+                }
+            }
+        }
+    }
+      
+    post {
+        always {
+            emailext(
+                to: mailingList,
+                recipientProviders: [culprits(), requestor(), upstreamDevelopers()],
+                replyTo: mailingList,
+                subject: "[${repoName}] Build #${currentBuild.number} ${currentBuild.currentResult}",
+                mimeType: 'text/html',
+                body: '${JELLY_SCRIPT,template="html.jelly"}'
+            )
+        }
+	 failure {
+            emailext(
+                to: '$DEFAULT_RECIPIENTS',
+                recipientProviders: [culprits(), requestor()],
+                replyTo: mailingList,
+                subject: "[${repoName}] Build #${currentBuild.number} ${currentBuild.currentResult}",
+                mimeType: 'text/html',
+                body: '${JELLY_SCRIPT,template="html.jelly"}'
+            )
+        }
+    }
+}
