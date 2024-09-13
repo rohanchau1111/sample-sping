@@ -1,3 +1,79 @@
+
+
+
+
+
+
+
+
+pipeline {
+    agent any
+
+    tools {
+        jdk 'JDK 11'  // Specify your JDK version
+    }
+
+    environment {
+        GRADLE_OPTS = '-Dorg.gradle.daemon=false'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build and Test') {
+            steps {
+                script {
+                    // This builds all subprojects in the multi-module setup
+                    sh './gradlew clean build'
+                }
+            }
+        }
+
+        stage('JaCoCo Report') {
+            steps {
+                script {
+                    // Generate the JaCoCo test coverage report
+                    sh './gradlew jacocoTestReport'
+                }
+            }
+        }
+
+        stage('Publish JaCoCo Report') {
+            steps {
+                jacoco execPattern: '**/build/jacoco/*.exec', // Coverage data
+                       classPattern: '**/build/classes/java/main', // Path to compiled classes
+                       sourcePattern: '**/src/main/java', // Path to source code
+                       inclusionPattern: '**/*.class',
+                       exclusionPattern: '**/test/**'
+            }
+        }
+    }
+
+    post {
+        always {
+            junit '**/build/test-results/**/*.xml'  // Publish JUnit test results
+            jacoco execPattern: '**/build/jacoco/*.exec'  // Publish JaCoCo coverage results
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 b2bi-identity
 buildSrc
 gradle/wrapper
