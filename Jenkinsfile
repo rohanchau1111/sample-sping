@@ -47,5 +47,9 @@ pipeline {
             }
         }
     }
-
+ post{
+  always{
+   jacoco()
+  }
+ }
 }
