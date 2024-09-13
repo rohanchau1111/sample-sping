@@ -1,0 +1,99 @@
+[Jenkins]Jenkins
+Search (CTRL+K)
+3
+2
+Rohan Chaudhari
+
+log out
+Dashboard
+Gateway
+gatewayapi
+feature/sfg20test
+Status
+Changes
+Build with Parameters
+View Configuration
+Full Stage View
+
+Open Blue Ocean
+
+Bitbucket
+Pipeline Syntax
+Build History
+trend
+Filter...
+#4
+Sep 13, 2024, 4:27 AM
+#3
+Sep 13, 2024, 4:02 AM
+#2
+Sep 12, 2024, 6:31 AM
+#1
+Sep 12, 2024, 5:55 AM
+Atom feed for all
+Atom feed for failures
+feature/sfg20test
+Full project name: test/gatewayapi/feature%2Fsfg20test
+Stage View
+Declarative: Checkout SCM	Build and Clean	JaCoCo Report	Declarative: Post Actions
+Average stage times:
+ 
+680ms
+4min 50s
+1s
+7s
+#4
+Sep 13
+04:27
+1 commit
+680ms
+4min 50s
+1s
+failed	
+7s
+Permalinks
+Last build (#4), 7 min 43 sec ago
+Last stable build (#2), 22 hr ago
+Last successful build (#2), 22 hr ago
+Last failed build (#4), 7 min 43 sec ago
+Last unsuccessful build (#4), 7 min 43 sec ago
+Last completed build (#4), 7 min 43 sec ago
+REST API
+Jenkins 2.462.2
+Stage Logs (JaCoCo Report)
+ Record JaCoCo coverage report (self time 1s)
+14:02:44  [JaCoCo plugin] Collecting JaCoCo coverage data...
+14:02:44  [JaCoCo plugin] Version: 3.3.5
+14:02:44  [JaCoCo plugin] **/build/jacoco/*.exec;**/build/classes/java/main;**/src/main/java; locations are configured
+14:02:44  [JaCoCo plugin] Number of found exec files for pattern **/build/jacoco/*.exec: 1
+14:02:44  [JaCoCo plugin] Saving matched execfiles:  /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/fg-rest-app/build/jacoco/test.exec
+14:02:44  [JaCoCo plugin] Saving matched class directories for class-pattern: **/build/classes/java/main: 
+14:02:44  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-data-core/build/classes/java/main 14 files
+14:02:44  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-data-entities/build/classes/java/main 25 files
+14:02:44  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-data/build/classes/java/main 223 files
+14:02:44  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-rest-core/build/classes/java/main 22 files
+14:02:44  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-rest/build/classes/java/main 61 files
+14:02:44  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/buildSrc/build/classes/java/main 3 files
+14:02:44  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/fg-data-entities/build/classes/java/main 73 files
+14:02:45  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/fg-data/build/classes/java/main 144 files
+14:02:45  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/fg-rest-app/build/classes/java/main 2 files
+14:02:45  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/fg-rest/build/classes/java/main 23 files
+14:02:45  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/identity-app/build/classes/java/main 4 files
+14:02:45  [JaCoCo plugin]  - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/identity-client/build/classes/java/main 6 files
+14:02:45  [JaCoCo plugin] Saving matched source directories for source-pattern: **/src/main/java: 
+14:02:45  [JaCoCo plugin] Source Inclusions: **/*.java,**/*.groovy,**/*.kt,**/*.kts
+14:02:45  [JaCoCo plugin] Source Exclusions: 
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-data-core/src/main/java 12 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-data-entities/src/main/java 25 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-data/src/main/java 113 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-rest-core/src/main/java 16 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/b2b-rest/src/main/java 59 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/fg-data-entities/src/main/java 44 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/fg-data/src/main/java 110 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/fg-rest-app/src/main/java 1 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/fg-rest/src/main/java 21 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/identity-app/src/main/java 4 files
+14:02:45  [JaCoCo plugin] - /work/jenkins/workspace/est_gatewayapi_feature_sfg20test/identity-client/src/main/java 6 files
+14:02:45  [JaCoCo plugin] Loading inclusions files..
+14:02:45  [JaCoCo plugin] inclusions: [**/*.class]
+14:02:45  [JaCoCo plugin] exclusions: [**/test/**]
