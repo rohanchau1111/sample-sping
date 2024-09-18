@@ -1,5 +1,5 @@
 /com/precisely/b2b/fg-rest-app/1.0-feature_sfg20test-SNAPSHOT
-
+ implementation 'com.precisely.b2b:fg-rest-app:1.0-feature_sfg20test-SNAPSHOT@zip'
 plugins {
     id 'java'
     id 'war'
