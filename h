@@ -1,3 +1,5 @@
+../
+identity-svc-1.0-feature_identity_liberty-20240916.094324-6-application_sample.yml
 /com/precisely/b2b/fg-rest-app/1.0-feature_sfg20test-SNAPSHOT
  implementation 'com.precisely.b2b:fg-rest-app:1.0-feature_sfg20test-SNAPSHOT@zip'
   implementation files('https://abd/artifactory/libs-snapshot-local/com/precisely/b2b/fg-rest-app/1.0-feature_sfg20test-SNAPSHOT/fg-rest-app-1.0-feature_sfg20test-20240917.080749-7-fg-liberty.zip')
