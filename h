@@ -1,3 +1,5 @@
+/com/precisely/b2b/fg-rest-app/1.0-feature_sfg20test-SNAPSHOT
+
 plugins {
     id 'java'
     id 'war'
